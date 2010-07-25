@@ -1,0 +1,106 @@
+<html>
+
+<!--
+  pgn4web javascript chessboard
+  copyright (C) 2009, 2010 Paolo Casaschi
+  see README file and http://pgn4web.casaschi.net
+  for credits, license and more details
+-->
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"> 
+
+<title>pgn4web</title> 
+
+<script src="pgn4web-server-config.js" type="text/javascript"></script>
+
+<style type="text/css"> 
+ 
+body
+{color: black; background: white; font-family: sans-serif; padding: 20px;}
+ 
+a:link, a:visited, a:hover, a:active
+{ color: black; text-decoration: none; }
+
+.menu_heading 
+{font-weight: normal; margin-left: 0; margin-right: 40px; margin-top: 3em; margin-bottom: 0;}
+
+.menu_item
+{font-weight: bold; margin-left: 20px; margin-right: 40px; margin-top: 0.66em; margin-bottom: 0;}
+
+.banner
+{font-size: large; font-weight: bold; margin-top: 1em; margin-bottom: 0em; text-align: center;}
+
+</style> 
+
+<link rel="shortcut icon" href="pawn.ico" />
+
+</head><body>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="middle"> 
+<h1 style="font-family: sans-serif; color: red;"><a style="color: red;" href=.>pgn4web</a></h1> 
+</td>
+<td align="right" valign="middle">
+<a href=.><img src=pawns.png border=0></a>
+</td>
+</tr></tbody></table>
+
+<div class="banner">javascript tool showing chess PGN games in websites and blogs</div>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" valign="top">
+<div class="menu_heading">online&nbsp;services</div>
+<div class="menu_item"><a href=board-generator.html>board&nbsp;generator</a></div>
+<!-- <div class="menu_item"><a href=viewer.php>games&nbsp;viewer</a></div> -->
+<div class="menu_item"><a href=demo.html?frame=inputform>games&nbsp;viewer</a></div>
+<div class="menu_item"><a href=live.html>live&nbsp;broadcast</a></div>
+<div class="menu_heading">software</div>
+<div class="menu_item"><a href=demo.html>demo</a></div>
+<div class="menu_item"><a href=http://code.google.com/p/pgn4web/>project</a></div>
+<div class="menu_item"><a href=http://code.google.com/p/pgn4web/downloads/list>download</a></div>
+<div class="menu_item"><a href=http://code.google.com/p/pgn4web/wiki/Index?tm=6>wiki</a></div>
+<div class="menu_heading">contacts</div>
+<script type="text/javascript">
+document.write('<div class="menu_item"><a href=' + pgn4web_project_blog + '>blog</a></div>');
+document.write('<div class="menu_item"><a href=mailto:' + pgn4web_project_email + '>email</a></div>');
+</script>
+
+
+<!-- start of donations code -->
+
+<!-- end of donations code -->
+
+
+</td>
+<td align="center" valign="top" width="100%">
+<iframe 
+  class='menu_heading' height='406' width='95%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
+  src='board.html?am=l&d=2000&ig=r&ss=45&ps=36&pf=r&lcs=Wtyk&dcs=OXJO&bbcs=OXJO&hm=n&hcs=ZbNv&bd=h&hd=c&md=j&tm=17&fhcs=nkYj&fhs=90p&fmcs=nkYj&fccs=nkYj&hmcs=ZbNv&fms=90p&fcs=90p&cd=h&bcs=Wtyk&fp=20&hl=t&fh=b&fw=p&pe=2017$A_e0G3vln1aYUX5ZInb9rvHKj2D4B$yeo0z_CLpvENVgZKNI$y6A0ib2t75hU1$jM1u7n$py71i9y$1nyu7P0a3jQ6$qQ1TXJvD$g3fizd$SjC7hFiz2v8TvpC7bD0W32qM0y$tQ5Yfo$1pvnB7bL2QjZfYkez5L0Sq7pQ0I$5Fi3ckEx2r$VXNcQ8x24$st9_grzk0C$8pvAjIfnr2GS75DyY14$m85w9Ft7fn4Np757qY13$Jtc$RRfwv6pEX_grBU1b$st9_grzk1c$17N6h4fyvdE5_grgN34$siUZyFgj7r$WiCV6sAfvr2EduDJhrwxv$FPQZvpIcfLL6pPQZxUcN570Su7sp9wy$sFzk4QjxDov$kpn_grgN5p$4Kjdz9wC$dPUZxU8N54$sGUN6mHuDnT1Uc1NmXX5Hh0ov7KSCLqVQvLEN1NYfdvluvfbKkk4dmheQZkD3nXD9ov3M0cfv$Ni75EN5$1pQ$kcgv45fAFc$Sx3FzM6$qGij3FzN1vdQho$Nm7r$3CF4MUs$T$RPfVgN29$58x0FzM0y$sFi3dKpvN$03o2m7bL6sByFm7cv1TXJyS7cD2JYuDsh9vS$0jM2IsVvMf$FWQZxUUN2d$hM09EnvLT6pEnyIjHfwf$kprlh_CvQxfad$x_0HxeMiz4AVvs$HL3mWOTcYpLnjUs7_mUlvhwTLEB$i3jQ1$28byu7n2t7Emt7L$pJXfbANc$5DNeryv$FnvC79$3PN5IfT0Px71p9vr$8ej2cq9vNv4MUrtmfYN25$4kazdQhU0z$VXfPsDU0B$sRx$x4fq$3Hfcij5P1UDPayNV2r$AF0FIbvMfekpo6ppvOvdE5vBDbd$cHx7VAgN39$pM6pnw0v28Hv88N370Q83dKnw2$dzo6pInw5$cbytDgD$QsVv9BDgL2E2f4k8379$WkG30kSF3d$WmtD1FBN32vekio2GMKPbj0rPx6pEDwwvsRx6pEHwx$jM2kpnwy$ckEx6hbwB$sRk2IhnwBvmjo2E2uDoL6sDlh_CvQxfaZ05pZuluRZk4dflmF0P1O$guKevSQG0wiAPyYuAp096y1Bn0bfij7$cgz2jU2$8Hv9BDL$8c3epyf0zBfYxd$5FYxdQtM0f3VKnwRGR7r0K30kSx0L6h7v9I5uDbD0FI5gKz5b0rtmfCF27$Vgz8rvO$dEHwQTF2n$3zN0zN4fqfdzc$Nu7cL$g5grfF24$Ex5JfoL4cfQlBDbd0gz28nw1v$zXf4ke37b0RFt7VXU13$tM2Fqz7n$9Fl7WkW37L0Qc33FAx3p$ij2k8F3r$VPk6jXuDfj1U7PdPMZw2vdzg4RNDfd$Vi38bwxv6pPM$QpnwwvsDxdEDwx$s7p3IfMvdP7xaFrlh_CvQxfab04ZXZ2ulH54dflmF0P1_T3mueFe9_0wiAPyYuAp05e91Bn0bfij7$cgz28rwv3Rf3Qxb$1ig1TXJyf0zN7xC7T0rtmgKj4$8mtDEmtDr0K33GK32v2kSx$FPo0A$ckDN0BIAfnL$zHfbQN27$bQF$zIfov0IXv7B7cv$iO75Ex2p$cjB75Fi35T0St7sYF24$VzfPsXgN2d$1hc$SBfnr$aq7Viz7j$zN0Fpw0v08pyFm7fv2IsVwRI5fwvdZRpdQhQ1b$sFAF0FPg1c$18F6pnw6$0ki9xVFoj79$VCGY4OOz7r0Sqz2q9w$T6h3rwStePbj0rBx6jNDnn2E1DJirwx$dQRk6J$0'  
+>
+  your web browser and/or your host do not support iframes as required to display the chessboard
+</iframe>
+</td>
+</tr></tbody></table>
+
+
+<!-- start of news feed code -->
+
+<!-- end of news feed code -->
+
+
+<!-- start of hostedBy code -->
+
+<!-- end of hostedBy code -->
+
+
+<!-- start of google analytics code -->
+
+<!-- end of google analytics code -->
+
+
+</body>
+
+</html>
+

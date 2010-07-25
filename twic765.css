@@ -1,0 +1,107 @@
+/*
+ *  pgn4web javascript chessboard
+ *  copyright (C) 2009, 2010 Paolo Casaschi
+ *  see README file and http://pgn4web.casaschi.net
+ *  for credits, license and more details
+ */
+
+@import url("fonts/pgn4web-fonts.css");
+
+html, 
+body { 
+  margin: 0; 
+  padding: 0;
+}
+
+body {
+  font-family: 'pgn4web Liberation Sans', sans-serif;
+  color: black;
+  background: white;
+}
+
+.boardTable {
+  border-style: double;
+  border-color: black;
+  border-width: 3;
+}
+
+.pieceImage {
+  width: 36;
+  height: 36;
+}
+
+.whiteSquare,
+.blackSquare,
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  width: 41;
+  height: 41;
+  border-style: solid;
+  border-width: 2;
+}
+
+.whiteSquare,
+.highlightWhiteSquare {
+  border-color: #ede8d5;
+  background: #ede8d5;
+}
+
+.blackSquare,
+.highlightBlackSquare {
+  border-color: #cfcbb3;
+  background: #cfcbb3;
+}
+
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  border-color: yellow;
+  border-style: solid;
+}
+
+.selectControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+  width: 100% !important;
+}
+
+.buttonControlPlay,
+.buttonControlStop,
+.buttonControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.buttonControlSpace {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.searchPgnButton {
+/* a "width" attribute here must use the !important flag to override default settings */
+  width: 10% !important;
+}
+
+.searchPgnExpression {
+/* a "width" attribute here must use the !important flag to override default settings */
+  width: 90% !important;
+}
+
+.move,
+.moveOn {
+  color: black;
+  font-family: 'pgn4web ChessSansUsual', 'pgn4web Liberation Sans', sans-serif;
+  line-height: 1.3em;
+  font-weight: normal;
+  text-decoration: none;   
+}
+
+.moveOn {
+  background: yellow;
+}
+
+.comment,
+.nag {
+  color: gray;
+}
+
+.label {
+  color: gray;
+}
+

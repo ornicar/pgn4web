@@ -1,0 +1,95 @@
+/*
+ *  pgn4web javascript chessboard
+ *  copyright (C) 2009, 2010 Paolo Casaschi
+ *  see README file and http://pgn4web.casaschi.net
+ *  for credits, license and more details
+ */
+
+html, 
+body { 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  font-family: sans-serif;
+  color: black;
+  background: white;
+}
+
+.boardTable {
+  border-style: outset; 
+  border-color: #DAE1D7;
+  border-width: 2px;
+}
+
+.pieceImage {
+  width: 36;
+  height: 36;
+}
+
+.whiteSquare,
+.blackSquare,
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  width: 42;
+  height: 42;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.whiteSquare,
+.highlightWhiteSquare {
+  background: #EFF4EC;
+  border-color: #EFF4EC;
+}
+
+.blackSquare,
+.highlightBlackSquare {
+  background: #C6CEC3;
+  border-color: #C6CEC3;
+}
+
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  border-style: inset;
+}
+
+.selectControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.buttonControlPlay,
+.buttonControlStop,
+.buttonControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.buttonControlSpace {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.searchPgnButton {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.searchPgnExpression {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.move,
+.moveOn {
+  color: black;
+  font-weight: normal;
+  text-decoration: none;   
+}
+
+.moveOn {
+  background: #DAE1D7;
+}
+
+.comment,
+.nag {
+  color: gray;
+}
+

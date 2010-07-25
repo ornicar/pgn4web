@@ -1,0 +1,96 @@
+/*
+ *  pgn4web javascript chessboard
+ *  copyright (C) 2009, 2010 Paolo Casaschi
+ *  see README file and http://pgn4web.casaschi.net
+ *  for credits, license and more details
+ */
+
+@import url("fonts/pgn4web-fonts.css");
+
+html, 
+body { 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  font-family: 'pgn4web Liberation Sans', sans-serif;
+  color: black;
+  background: white;
+}
+
+.boardTable {
+  border-style: double; 
+  border-color: gray; /* #C6CEC3; */
+  border-width: 3px;
+}
+
+.pieceImage {
+  width: 32px;
+  height: 32px;
+}
+
+.whiteSquare,
+.blackSquare,
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  width: 40px;
+  height: 40px;
+}
+
+.whiteSquare,
+.highlightWhiteSquare {
+  background: #EFF4EC;
+}
+
+.blackSquare,
+.highlightBlackSquare {
+  background: #C6CEC3;
+}
+
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  background: #DAF4D7;
+}
+
+.selectControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+  padding: 2px;
+}
+
+.buttonControlPlay,
+.buttonControlStop,
+.buttonControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.buttonControlSpace {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.searchPgnButton {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.searchPgnExpression {
+/* a "width" attribute here must use the !important flag to override default settings */
+}
+
+.move,
+.moveOn {
+  color: black;
+  font-family: 'pgn4web ChessSansPiratf', 'pgn4web Liberation Sans', sans-serif;
+  line-height: 1.3em;
+  font-weight: normal;
+  text-decoration: none;   
+}
+
+.moveOn {
+  background: #C6CEC3;
+}
+
+.comment,
+.nag {
+  color: gray;
+}
+
