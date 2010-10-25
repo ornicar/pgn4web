@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 30
-/svn/!svn/ver/4055/trunk/fonts
+/svn/!svn/ver/4718/trunk/fonts
 END
 ChessSansPiratf.eot
 K 25
@@ -129,17 +129,17 @@ svn:wc:ra_dav:version-url
 V 50
 /svn/!svn/ver/2046/trunk/fonts/ChessSansPiratf.svg
 END
-ChessSansAlpha.woff
-K 25
-svn:wc:ra_dav:version-url
-V 50
-/svn/!svn/ver/2046/trunk/fonts/ChessSansAlpha.woff
-END
 ChessSansUsual.ttf
 K 25
 svn:wc:ra_dav:version-url
 V 49
 /svn/!svn/ver/1971/trunk/fonts/ChessSansUsual.ttf
+END
+ChessSansAlpha.woff
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2046/trunk/fonts/ChessSansAlpha.woff
 END
 ChessSansUscf.eot
 K 25
@@ -147,17 +147,17 @@ svn:wc:ra_dav:version-url
 V 48
 /svn/!svn/ver/1971/trunk/fonts/ChessSansUscf.eot
 END
-LiberationSans-Regular.eot
-K 25
-svn:wc:ra_dav:version-url
-V 57
-/svn/!svn/ver/2026/trunk/fonts/LiberationSans-Regular.eot
-END
 ChessSansUsual.svg
 K 25
 svn:wc:ra_dav:version-url
 V 49
 /svn/!svn/ver/2046/trunk/fonts/ChessSansUsual.svg
+END
+LiberationSans-Regular.eot
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2026/trunk/fonts/LiberationSans-Regular.eot
 END
 ChessSansMerida.ttf
 K 25
@@ -165,17 +165,17 @@ svn:wc:ra_dav:version-url
 V 50
 /svn/!svn/ver/1971/trunk/fonts/ChessSansMerida.ttf
 END
-index.html
-K 25
-svn:wc:ra_dav:version-url
-V 41
-/svn/!svn/ver/4055/trunk/fonts/index.html
-END
 ChessSansMerida.svg
 K 25
 svn:wc:ra_dav:version-url
 V 50
 /svn/!svn/ver/2046/trunk/fonts/ChessSansMerida.svg
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/4718/trunk/fonts/index.html
 END
 README.txt
 K 25

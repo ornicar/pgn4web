@@ -43,22 +43,13 @@ a:link, a:visited, a:hover, a:active
 </td>
 </tr></tbody></table>
  
-<div>&nbsp;</div>
-
-<center>
-<table bgcolor=#EDE8D5 width=100% cellpadding=60 cellspacing=0><tbody><tr><td align=center valign=middle>
+<div style="margin: 40px;">
+<table style='box-shadow: 0px 0px 20px #663300; -webkit-box-shadow: 0px 0px 20px #663300; -moz-box-shadow: 0px 0px 20px #663300; border-style: solid; border-color: #EDE8D5; border-width: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;' bgcolor=#EDE8D5 width=100% cellpadding=60 cellspacing=0><tbody><tr><td align=center valign=middle>
 <script type="text/javascript">document.write('<iframe src=' + pgn4web_live_compact_url + ' height="360" width="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">your browser does not support the required iframe functionality</iframe>');</script>
 </td></tr></tbody></table>
-</center>
+</div>
 
-<div>&nbsp;</div>
 <div style="text-align: right; font-size: 66%">click on square H8 for help</div> 
-
-
-<!-- start of google analytics code -->
-
-<!-- end of google analytics code -->
-
 
 </body>
 

@@ -50,7 +50,7 @@ cols2clear="ABCDEFGH";
 rows2clear="1234567";
 for (c=0; c<cols2clear.length; c++) {
   for (r=0; r<rows2clear.length; r++) {
-    configBoardShrortcut(cols2clear.charAt(c)+rows2clear.charAt(r), "", function(){});
+    boardShortcut(cols2clear.charAt(c)+rows2clear.charAt(r), "", function(){});
   }
 }
 
@@ -59,10 +59,10 @@ function gup( name ){
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
   var regexS = "[\\?&]"+name+"=([^&#]*)";  
   regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
-  var regex = new RegExp( regexS );
+  var regex = new RegExp( regexS, "i" );
   var results = regex.exec( window.location.href );
   if( results === null ) { return ""; }
-  else { return results[1]; }
+  else { return decodeURIComponent(results[1]); }
 }
 
 if ((assignedInitialGame = gup('n')) !== '') { SetInitialGame(assignedInitialGame); }
@@ -131,7 +131,7 @@ if ((assignedInitialGame = gup('n')) !== '') { SetInitialGame(assignedInitialGam
 <td width=4px>
 </td>
 <td width=80px valign=top>
-<input type=button value="next puzzle" title="click here to load the next puzzle" class="newButton" onClick="javascript: document.getElementById('solution').style.visibility = 'hidden'; document.getElementById('task').style.visibility = 'visible'; currentGame = Math.floor(Math.random()*numberOfGames);Init();" onFocus="this.blur()">
+<input type=button value="next puzzle" title="click here to load the next puzzle" class="newButton" onClick="javascript: document.getElementById('solution').style.visibility = 'hidden'; document.getElementById('task').style.visibility = 'visible'; Init(Math.floor(Math.random()*numberOfGames));" onFocus="this.blur()">
 </td>
 </tr>
 </table>

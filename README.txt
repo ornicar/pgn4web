@@ -149,8 +149,13 @@ to any <div> or <span> containers with the following IDs:
   <div id="GameWhiteClock"></div>
   <div id="GameBlackClock"></div>
   <div id="GameLiveStatus"></div>
+  <div id="GameLiveLastModified"></div>
 
 The file template.css shows a list of customization style options.
+For better chessboard display, it is recommended to explicitly enforce 
+chessboard square sizes using the ".whiteSquare" and ".blackSquare" CSS 
+classes, such as:
+  .whiteSquare, .blackSquare { width:40px; height:40px; }
 
 See template.html file for an example.
 See *mini.html* for an example of embedding the PGN content into the HTML file.
@@ -216,9 +221,12 @@ If your live PGN contains clock info as comments after each game such as
 Clock information provided by the DGT chessboards (like {[%clk 1:59:59]}) is
 also supported.
 
-The status of the live broadcast is displayed in the following section: 
+The status of the live broadcast is displayed in the following sections: 
 
   <div id="GameLiveStatus"></div>
+  <div id="GameLiveLastRefreshed"></div>
+  <div id="GameLiveLastReceived"></div>
+  <div id="GameLiveLastModifiedServer"></div>
 
 Clicking on the H6 square will force a games refresh.
 Clicking on the A6/B6 squares will pause/restart the automatic games refresh.
@@ -276,20 +284,45 @@ allow for execution of custom commands when shift + a number key is pressed:
 - customShortcutKey_Shift_9()
 
 
+SHORTCUT KEYS AND TEXT FORMS
+
+When the HTML page contains the following script command
+
+  SetShortcutKeysEnabled(true);
+
+then all keystrokes for that active page are captured and processed by pgn4web; 
+this allows for instance to browse the game using the arrow keys. If no other 
+precautions are taken, this has also the undesirable side effect of capturing 
+keystrokes intended by the user for typing in text forms when present in the 
+same page: this makes the text forms unusable.
+
+In order to have fully functional text forms in pgn4web pages, the following 
+"onFocus" and "onBlur" actions should be added to the textarea forms:
+
+  <textarea onFocus="disableShortcutKeysAndStoreStatus();" 
+  onBlur="restoreShortcutKeysStatus();"></textarea> 
+
+See the inputform.html HTML file for an example.
+
+
 TECHNICAL NOTES ABOUT WEB BROWSERS
 
-pgn4web.js is developed and tested with a variety of browsers (Arora, 
-Blackberry browser, Chrome, Epiphany, Firefox, Internet Explorer, Opera, 
-Safari) on a variety of platforms (Linux/Debian, MacOS, Windows). Not every 
-browser version and every combination of browser/platform has been tested. 
+pgn4web is developed and tested with recent versions of a variety of 
+browsers (Arora, Blackberry browser, Chrome, Epiphany, Firefox, Internet 
+Explorer, Opera, Safari) on a variety of personal computer platforms 
+(Linux/Debian, MacOS, Windows) and some smartphone/pda platform (Android, 
+Blackberry, Apple iOS for iPhone/iPad/iPod).
+Not every browser version (please upgrade to a recent release) has been 
+tested and not every combination of browser/platform has been validated. 
 If you have any issue with using pgn4web on your platform, please email 
-pgn4web@casaschi.net
+pgn4web@casaschi.net 
 
 Note about Google Chrome: you might experience problems when testing HTML
 pages from your local computer while developing your site. This is a
-limitation of the browser with respect to loading local files. There is no
-workaround other than testing with a different browser. Browsing pgn4web
-websites with Google Chrome should work properly.
+security limitation of the browser with respect to loading local files. 
+The limitation can be bypassed by starting Google Chrome with the command 
+line switch '--allow-file-access-from-files'. Browsing pgn4web websites
+with Google Chrome should work properly.
 
 Note about Internet Explorer v7 and above: under some circumstances you might
 experience problems when testing HTML pages from your local computer while 
@@ -327,6 +360,10 @@ and stores the internal comment value for internal use.
 
 Please email me for review any PGN file that pgn4web fails parsing correctly. 
 
+CHESS960 SUPPORT
+
+pgn4web supports Chess960 (a.k.a. Fischer random chess) and understands both 
+the X-FEN and the Shredder-FEN extensions to the FEN notation.
 
 JAVASCRIPT CODING
 

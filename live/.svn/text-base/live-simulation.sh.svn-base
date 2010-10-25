@@ -21,10 +21,15 @@ then
 	exit
 fi
 
-if [ "$(basename $SHELL)" != "bash" ]
+if [ "$1" == "--no-shell-check" ]
 then
-	echo "ERROR: $(basename $0) should be run with bash"
-	exit
+        shift 1
+else
+        if [ "$(basename $SHELL)" != "bash" ]
+        then
+                echo "ERROR: $(basename $0) should be run with bash. Prepend --no-shell-check as first parameters to skip checking the shell type."
+                exit
+        fi
 fi
 
 pgn_file=live.pgn
@@ -32,6 +37,13 @@ pgn_file_tmp=live-tmp.pgn
 delay=17
 
 # dont touch after this line
+
+umask 0000
+if [ $? -ne 0 ]
+then
+        echo "ERROR: $(basename $0) failed setting umask 0000"
+        exit
+fi 
 
 game1_header="[Event \"Tilburg Fontys\"]\n[Site \"Tilburg\"]\n[Date \"1998.10.24\"]\n[Round \"2\"]\n[White \"Anand, Viswanathan\"]\n[Black \"Kramnik, Vladimir\"]\n[WhiteClock \"2:00:00\"]\n[BlackClock \"2:00:00\"]"
 game1_header_live="$game1_header\n[Result \"*\"]\n"

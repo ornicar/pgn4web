@@ -70,15 +70,17 @@ try {
 if (isRotated) {
   colorAtTheBottom = "Black";
   shortcutSquareKeyEnable = "A2";
-  shortcutSquareSearchPopup = "H4";
-  shortcutSquareSearchRepeat = "G4";
+  shortcutSquareSearchPopup = "G4";
+  shortcutSquareSearchRepeat = "F4";
+  shortcutSquareSearchRepeatBackward = "H4";
   rowNumbers = "87654321";
   colLetters = "HGFEDCBA";
 } else {
   colorAtTheBottom = "White";
   shortcutSquareKeyEnable = "H7";
-  shortcutSquareSearchPopup = "A5";
-  shortcutSquareSearchRepeat = "B5";
+  shortcutSquareSearchPopup = "B5";
+  shortcutSquareSearchRepeat = "C5";
+  shortcutSquareSearchRepeatBackward = "A5";
   rowNumbers = "12345678";
   colLetters = "ABCDEFGH";
 }
@@ -122,7 +124,7 @@ Errors alert messages are logged, such as failures to load PGN games, incorrect 
     document.write("</table>");	
     document.write("<i>Squares labeled assuming " + colorAtTheBottom + " on bottom.</i>");
   } catch (e) {
-    print_help_row("could not find shortcut squares info from the opener window", "");
+    print_help_row("shortcut squares info not available from the opener window", "");
     print_help_row("please hover the mouse pointer on each square of the chessboard to check for their shortcut action", "");
     document.write("</table>");	
   }
@@ -149,6 +151,7 @@ print_help_row("c, x", "load random game, random game at random ply");
 print_help_row("&nbsp;", "");
 print_help_row("s", "search prompt");
 print_help_row("enter", "repeat last search");
+print_help_row("shift-enter", "repeat last search backward");
 print_help_row("&nbsp;", "");
 print_help_row("r, y", "pause, restart live broadcast automatic refresh");
 print_help_row("t", "force games refresh during live broadcast");
@@ -187,7 +190,7 @@ try {
 <script type="text/javascript">print_menu("search", 2, "search&nbsp;tool");</script>
 
 <script type="text/javascript">
-document.write('Access the search tool either direclty with the search form (if available on the web page) or via the popup search box invoked with the ' + shortcutSquareSearchRepeat + ' shortcut square (assuming ' + colorAtTheBottom + ' on bottom) and/or the \'s\' shortcut key. The ' + shortcutSquareSearchPopup + ' shortcut square (assuming ' + colorAtTheBottom + ' on bottom) and/or the \'enter\' shortcut key repeat the last search.'); 
+document.write('Access the search tool either direclty with the search form (if available on the web page) or via the popup search box invoked with the ' + shortcutSquareSearchPopup + ' shortcut square (assuming ' + colorAtTheBottom + ' on bottom) and/or the \'s\' shortcut key. The ' + shortcutSquareSearchRepeat + ' shortcut square (assuming ' + colorAtTheBottom + ' on bottom) and/or the \'enter\' shortcut key repeat the last search. The ' + shortcutSquareSearchRepeatBackward + ' shortcut square (assuming ' + colorAtTheBottom + ' on bottom) and/or the \'shift-enter\' shortcut key repeat the last search backward.'); 
 </script>
 
 <p></p>
@@ -199,8 +202,10 @@ print_help_row("something", "search for text <i>something</i> anywhere in the PG
 print_help_row("White\\s*\"Somebody", "search for player <i>Somebody</i> as White");
 print_help_row("\(White|Black\)\\s*\"Somebody", "search for player <i>Somebody</i> as either White or Black");
 print_help_row("White\\s*\"Somebody.*Black\\s*\"Other", "search for <i>Somebody</i> vs <i>Other</i> games");
-print_help_row("Site\\s*\"Somewhere.*Result\\s\"\(1-0|0-1\)", "search for games at the <i>Somewhere</i> site ending with a win");
-print_help_row("1.\\s*e4\\s*e6", "search for games with moves <i>1. e4 e6</i>");
+print_help_row("Site\\s*\"Somewhere.*Result\\s*\"\(1-0|0-1\)", "search for games at the <i>Somewhere</i> site ending with a win");
+print_help_row("Result\\s*\"\(?!1-0\)", "search for games not ending with a White win");
+print_help_row("[^0-9]1.\\s*e4\\s*e6", "search for games with moves <i>1. e4 e6</i>");
+print_help_row("[^0-9]1.\\s*e4\\s*e5\(?!\\s*2.\\s*Nf3\)", "search for games with moves <i>1. e4 e5</i> without <i>2. Nf3</i>");
 document.write("</table>");
 
 </script>

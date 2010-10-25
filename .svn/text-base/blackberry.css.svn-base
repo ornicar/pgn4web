@@ -18,41 +18,38 @@ body {
 }
 
 .boardTable {
-  border-style: double; 
-  border-color: black;
-  border-width: 3px;
+  width: 320px;
+  height: 320px;
 }
 
 .pieceImage {
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
 }
 
 .whiteSquare,
 .blackSquare,
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  width: 35px;
-  height: 35px;
-  border-width: 2px;
-  border-style: solid;
+  width: 40px;
+  height: 40px;
 }
 
 .whiteSquare,
 .highlightWhiteSquare {
-  border-color: #ede8d5;
   background: #ede8d5;
+  border-color: #ede8d5;
 }
 
 .blackSquare,
 .highlightBlackSquare {
-  border-color: #cfcbb3;
   background: #cfcbb3;
+  border-color: #cfcbb3;
 }
 
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  border-color: yellow;
+  background: #f5d0a9;
 }
 
 .selectControl {

@@ -20,10 +20,15 @@ then
 	exit
 fi
 
-if [ "$(basename $SHELL)" != "bash" ]
+if [ "$1" == "--no-shell-check" ]
 then
-	echo "ERROR: $(basename $0) should be run with bash"
-	exit
+        shift 1
+else
+        if [ "$(basename $SHELL)" != "bash" ]
+        then
+                echo "ERROR: $(basename $0) should be run with bash. Prepend --no-shell-check as first parameters to skip checking the shell type."
+                exit
+        fi
 fi
 
 if [ -z "$(which awk)" ]
@@ -45,6 +50,11 @@ pgn4web_dir=$(dirname $0)
 
 for ((i=0; i<length; i++))
 do
+	if [ "${pgn4web_log[i]}" == ".log" ]
+	then
+		pgn4web_log[i]="live.pgn.log"
+	fi
+
 	if [ -n "$pgn4web_dir" ]
 	then
 		if [[ ${pgn4web_log[i]} != /* ]]
@@ -55,7 +65,7 @@ do
 
 	if [ -f "${pgn4web_log[$i]}" ]
 	then
-		pgn4web_steps[i]=$(cat ${pgn4web_log[$i]} | awk 'END { printf("%4d of %4d", $11, $13) }')
+		pgn4web_steps[i]=$(cat ${pgn4web_log[$i]} | awk 'END { printf("%4d of %4d", $8, $10) }')
 	else
 		pgn4web_steps[i]="unavaiable  "
 	fi

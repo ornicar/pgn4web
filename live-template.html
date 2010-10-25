@@ -33,7 +33,7 @@
    SetAutoplayDelay(3000); // milliseconds
 // SetAutostartAutoplay(false);
 // SetAutoplayNextGame(false); // if set, move to the next game at the end of the current game during autoplay
-// SetInitialGame(1); // number of game to be shown at load, from 1 (default); values (keep the quotes) of "first", "last", "random" are accepted; other string values assumed as PGN search string
+   SetInitialGame("Topalov"); // number of game to be shown at load, from 1 (default); values (keep the quotes) of "first", "last", "random" are accepted; other string values assumed as PGN search string
 
    // make sure each time a game is loaded the last played move is shown
    SetInitialHalfmove("end", true); // halfmove number to be shown at load, 0 (default) for start position; values (keep the quotes) of "start", "end", "random" and "comment" (go to first comment) are also accepted. Second parameter if true applies the setting to every selected game instead of startup only (default)
@@ -71,6 +71,12 @@
 
 <td>
 <span class="label">Live broadcast status:</span> <span id="GameLiveStatus"></span> 
+<br>
+<span class="label">Live broadcast refreshed:</span> <span id="GameLiveLastRefreshed"></span>
+<br>
+<span class="label">Live broadcast received:</span> <span id="GameLiveLastReceived"></span>
+<br>
+<span class="label">Live broadcast modified (server time):</span> <span id="GameLiveLastModifiedServer"></span>
 <p></p>
 <span class="label">Event:</span> <span id="GameEvent"></span> 
 <br>

@@ -20,15 +20,15 @@
    SetPgnUrl("paolo-chess-games.pgn"); // if set, this has precedence over the inline PGN in the HTML file
    SetImagePath("alpha/32"); // use "" path if images are in the same folder as this javascript file
    SetImageType("png");
-   SetHighlightOption(false); // true or false
+   SetHighlightOption(true); // true or false
    SetGameSelectorOptions("Select from Paolo's games...", false, 0, 0, 0, 15, 15, 0, 10); // (head, num, chEvent, chSite, chRound, chWhite, chBlack, chResult, chDate);
-   SetCommentsIntoMoveText(true);
+   SetCommentsIntoMoveText(false);
    SetCommentsOnSeparateLines(false);
    SetAutoplayDelay(2000); // milliseconds
 // SetAutostartAutoplay(false);
 // SetAutoplayNextGame(false); // if set, move to the next game at the end of the current game during autoplay
 // SetInitialGame(1); // number of game to be shown at load, from 1 (default); values (keep the quotes) of "first", "last", "random" are accepted; other string values assumed as PGN search string
-   SetInitialHalfmove(1,true); // halfmove number to be shown at load, 0 (default) for start position; values (keep the quotes) of "start", "end", "random" and "comment" (go to first comment) are also accepted. Second parameter if true applies the setting to every selected game instead of startup only (default)
+   SetInitialHalfmove("comment",true); // halfmove number to be shown at load, 0 (default) for start position; values (keep the quotes) of "start", "end", "random" and "comment" (go to first comment) are also accepted. Second parameter if true applies the setting to every selected game instead of startup only (default)
    SetShortcutKeysEnabled(true);
 </script>
 
@@ -42,32 +42,42 @@
 </textarea></form>
 <!-- paste your PGN above and make sure you dont specify an external source with SetPgnUrl() -->
 
-<TABLE CELLSPACING=24>
-<TR>
+<table cellpadding=15 border=0>
 
-<TD ALIGN=center VALIGN=top>
+<tr>
+
+<td align=center valign=top>
 <div id="GameSelector"></div>
-<br>
+</td>
+
+<td valign=top>
+<a href="javascript:MoveToPrevComment();" onfocus="this.blur()"><div id="GameDate" style="font-size: 120%; font-weight: bold; text-align: right;"></div></a>
+</td>
+
+</tr>
+
+<tr>
+
+<td align=center valign=top>
 <div id="GameBoard"></div>
-<p></p>
-<div id="GameButtons"></div>
-</TD>
+<div style="margin-top: 30px;" id="GameButtons"></div>
+</td>
 
-<TD VALIGN=top>
-<div id="GameDate" style="font-size: 120%; font-weight: bold; text-align: right;"></div>
-<p></p>
-<div style="font-size: 150%; font-weight: bold; text-align: left;"><span style="white-space: nowrap;" id="GameWhite"></span><span style="white-space: nowrap;">&nbsp;&nbsp;-&nbsp;&nbsp;</span><span style="white-space: nowrap;" id="GameBlack"></span></div>
-<p></p>
-<div id="GameEvent" style="font-size: 120%; font-weight: bold; text-align: right; white-space: nowrap;"></div>
-<div id="GameSite" style="font-size: 120%; font-weight: bold; text-align: right; white-space: nowrap;"></div>
-<p></p>
+<td valign=top>
+<div style="margin-left: 10px;">
+<div style="font-size: 150%; font-weight: bold; text-align: left; margin-bottom: 30px;">
+<a href="javascript:searchPgnGame(gameWhite[currentGame]);" onfocus="this.blur()"><span style="white-space: nowrap;" id="GameWhite"></span></a>
+<span style="white-space: nowrap;">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+<a href="javascript:searchPgnGame(gameBlack[currentGame]);" onfocus="this.blur()"><span style="white-space: nowrap;" id="GameBlack"></span></a>
+</div>
 <div style="text-align: justify" id="GameText"></div>
-<p></p>
-<div id="GameResult" style="font-size: 120%; font-weight: bold; text-align: left;"></div>
-</TD>
+<a href="javascript:MoveToNextComment();" onfocus="this.blur()"><div id="GameResult" style="font-size: 120%; font-weight: bold; text-align: right; margin-top: 30px;"></div></a>
+</div>
+</td>
 
-</TR>
-</TABLE>
+</tr>
+
+</table>
 
 
 </body>

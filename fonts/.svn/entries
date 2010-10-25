@@ -1,14 +1,14 @@
 10
 
 dir
-4305
+4818
 http://pgn4web.googlecode.com/svn/trunk/fonts
 http://pgn4web.googlecode.com/svn
 
 
 
-2010-06-21T09:51:25.651813Z
-4055
+2010-09-29T19:40:41.015940Z
+4718
 paolocasaschi
 
 
@@ -740,40 +740,6 @@ paolocasaschi@gmail.com
 
 239814
 
-ChessSansAlpha.woff
-file
-
-
-
-
-2010-07-25T00:09:44.304759Z
-699c58df60229c45547404fe038de697
-2009-11-11T15:44:18.742879Z
-2046
-paolocasaschi@gmail.com
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-65340
-
 ChessSansUsual.ttf
 file
 
@@ -807,6 +773,40 @@ has-props
 
 
 142640
+
+ChessSansAlpha.woff
+file
+
+
+
+
+2010-07-25T00:09:44.304759Z
+699c58df60229c45547404fe038de697
+2009-11-11T15:44:18.742879Z
+2046
+paolocasaschi@gmail.com
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+65340
 
 ChessSansUscf.eot
 file
@@ -842,40 +842,6 @@ has-props
 
 139718
 
-LiberationSans-Regular.eot
-file
-
-
-
-
-2010-07-25T00:09:44.315673Z
-01289d7fd5a8f76408b2266a0522d3d7
-2009-11-10T19:31:13.878139Z
-2026
-paolocasaschi@gmail.com
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-160974
-
 ChessSansUsual.svg
 file
 
@@ -909,6 +875,40 @@ paolocasaschi@gmail.com
 
 
 292741
+
+LiberationSans-Regular.eot
+file
+
+
+
+
+2010-07-25T00:09:44.315673Z
+01289d7fd5a8f76408b2266a0522d3d7
+2009-11-10T19:31:13.878139Z
+2026
+paolocasaschi@gmail.com
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+160974
 
 ChessSansMerida.ttf
 file
@@ -944,40 +944,6 @@ has-props
 
 140736
 
-index.html
-file
-
-
-
-
-2010-07-25T00:09:44.324433Z
-68b329da9893e34099c7d8ad5cb9c940
-2010-06-21T09:51:25.651813Z
-4055
-paolocasaschi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1
-
 ChessSansMerida.svg
 file
 
@@ -1011,6 +977,40 @@ paolocasaschi@gmail.com
 
 
 269031
+
+index.html
+file
+
+
+
+
+
+68b329da9893e34099c7d8ad5cb9c940
+2010-09-29T19:40:41.015940Z
+4718
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
 
 README.txt
 file

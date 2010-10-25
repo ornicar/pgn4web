@@ -50,7 +50,7 @@ rows2clear="34567";
 
 for (c=0; c<cols2clear.length; c++) {
   for (r=0; r<rows2clear.length; r++) {
-    configBoardShrortcut(cols2clear.charAt(c)+rows2clear.charAt(r), "", function(){});
+    boardShortcut(cols2clear.charAt(c)+rows2clear.charAt(r), "", function(){});
   }
 }
 
@@ -76,12 +76,12 @@ for (c=0; c<cols2clear.length; c++) {
     <td align=left valign=top>
       <div style="text-align:right; font-size: 140%; font-weight: bold">Tilburg Fontys 1998 round 2</div>
       <div style="text-align:left;">
-      <br><a id="game5" class=gamelist         href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=5;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Peter Svidler&nbsp; - &nbsp;Jeroen Piket&nbsp; &nbsp;1-0&nbsp;</a>
-      <br><a id="game1" class="gamelistselected moveOn" href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=1;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Viswanathan Anand&nbsp; - &nbsp;Vladimir Kramnik&nbsp; &nbsp;1-0&nbsp;</a>
-      <br><a id="game3" class=gamelist         href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=3;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Mattew Sadler&nbsp; - &nbsp;Veselin Topalov&nbsp; &nbsp;1/2-1/2&nbsp;</a>
-      <br><a id="game4" class=gamelist         href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=4;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Vadim Zvjaginsev&nbsp; - &nbsp;Peter Leko&nbsp; &nbsp;1/2-1/2&nbsp;</a>
-      <br><a id="game2" class=gamelist         href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=2;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Joel Lautier &nbsp;-&nbsp; Loek Van Wely&nbsp; &nbsp;1/2-1/2&nbsp;</a>
-      <br> <a id="game0" class=gamelist         href="javascript:document.getElementById('game'+currentGame).className='gamelist';currentGame=0;document.getElementById('game'+currentGame).className='gamelistselected moveOn';Init();SetAutoPlay(true);" onfocus="this.blur()">&nbsp;Viktor Kortschnoj&nbsp; - &nbsp;Michael Adams&nbsp; &nbsp;0-1&nbsp;</a>
+      <br><a id="game5" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game5').className='gamelistselected moveOn';Init(5);SetAutoPlay(true);" onfocus="this.blur()" class="gamelist">&nbsp;Peter Svidler&nbsp; - &nbsp;Jeroen Piket&nbsp; &nbsp;1-0&nbsp;</a>
+      <br><a id="game1" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game1').className='gamelistselected moveOn';Init(1);SetAutoPlay(true);" onfocus="this.blur()" class="gamelistselected moveOn">&nbsp;Viswanathan Anand&nbsp; - &nbsp;Vladimir Kramnik&nbsp; &nbsp;1-0&nbsp;</a>
+      <br><a id="game3" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game3').className='gamelistselected moveOn';Init(3);SetAutoPlay(true);" onfocus="this.blur()" class="gamelist">&nbsp;Mattew Sadler&nbsp; - &nbsp;Veselin Topalov&nbsp; &nbsp;1/2-1/2&nbsp;</a>
+      <br><a id="game4" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game4').className='gamelistselected moveOn';Init(4);SetAutoPlay(true);" onfocus="this.blur()" class="gamelist">&nbsp;Vadim Zvjaginsev&nbsp; - &nbsp;Peter Leko&nbsp; &nbsp;1/2-1/2&nbsp;</a>
+      <br><a id="game2" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game2').className='gamelistselected moveOn';Init(2);SetAutoPlay(true);" onfocus="this.blur()" class="gamelist">&nbsp;Joel Lautier &nbsp;-&nbsp; Loek Van Wely&nbsp; &nbsp;1/2-1/2&nbsp;</a>
+      <br><a id="game0" href="javascript:document.getElementById('game'+currentGame).className='gamelist';document.getElementById('game0').className='gamelistselected moveOn';Init(0);SetAutoPlay(true);" onfocus="this.blur()" class="gamelist">&nbsp;Viktor Kortschnoj&nbsp; - &nbsp;Michael Adams&nbsp; &nbsp;0-1&nbsp;</a>
     </td>
   </tr>
   <tr>

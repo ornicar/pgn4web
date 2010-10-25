@@ -10,7 +10,7 @@
 html, 
 body { 
   margin: 0; 
-  padding: 0; 
+  padding: 10px; 
 }
 
 body {
@@ -19,10 +19,18 @@ body {
   background: white;
 }
 
+a { 
+  color: black;
+  text-decoration: none;
+}
+
 .boardTable {
-  border-style: double; 
-  border-color: gray; /* #C6CEC3; */
-  border-width: 3px;
+  border-style: outset;
+  border-width: 2px;
+  border-color: #DAE1D7;
+  box-shadow: 0px 0px 30px #BBBBBB;
+  -webkit-box-shadow: 0px 0px 30px #BBBBBB;
+  -moz-box-shadow: 0px 0px 30px #BBBBBB;
 }
 
 .pieceImage {
@@ -36,21 +44,25 @@ body {
 .highlightBlackSquare {
   width: 40px;
   height: 40px;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .whiteSquare,
 .highlightWhiteSquare {
   background: #EFF4EC;
+  border-color: #EFF4EC;
 }
 
 .blackSquare,
 .highlightBlackSquare {
   background: #C6CEC3;
+  border-color: #C6CEC3;
 }
 
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  background: #DAF4D7;
+  border-style: inset;
 }
 
 .selectControl {
@@ -82,11 +94,14 @@ body {
   font-family: 'pgn4web ChessSansPiratf', 'pgn4web Liberation Sans', sans-serif;
   line-height: 1.3em;
   font-weight: normal;
-  text-decoration: none;   
+  text-decoration: none;
 }
 
 .moveOn {
-  background: #C6CEC3;
+  background: #DDDDDD;
+  box-shadow: 0px 0px 11px #BBBBBB;
+  -webkit-box-shadow: 0px 0px 11px #BBBBBB;
+  -moz-box-shadow: 0px 0px 11px #BBBBBB;
 }
 
 .comment,

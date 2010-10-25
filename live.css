@@ -25,24 +25,21 @@ a {
 }
 
 .boardTable {
-  border-style: double; 
-  border-color: #CFCBB3;
-  border-width: 3px;
 }
 
 .pieceImage {
-  width: 24;
-  height: 24;
+  width: 26px;
+  height: 26px;
 }
 
 .whiteSquare,
 .blackSquare,
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  width: 26;
-  height: 26;
+  width: 26px;
+  height: 26px;
   border-style: solid;
-  border-width: 2;
+  border-width: 2px;
 }
 
 .whiteSquare,
@@ -60,7 +57,7 @@ a {
 .highlightWhiteSquare,
 .highlightBlackSquare {
   border-style: solid;
-  border-color: #F8CCA0; /* #E6CCB3; */ /* #F5B371; */
+  border-color: #F8CCA0;
 }
 
 .selectControl {
@@ -121,7 +118,7 @@ a {
 
 .move,
 .moveOn {
-  font-family: 'pgn4web ChessSansUscf', 'pgn4web Liberation Sans', sans-serif;
+  font-family: 'pgn4web ChessSansPiratf', 'pgn4web Liberation Sans', sans-serif;
   line-height: 1.4em;
 }
 
@@ -139,7 +136,7 @@ a {
 .headerHighlightedNosize,
 .moveOn {
   color: black;
-  background: #F8CCA0; /* #E6CCB3; */ /* #F5B371; */
+  background: #F8CCA0;
 }
 
 .comment,

@@ -35,15 +35,15 @@ a {
 }
 
 .input, .textbox {
-  border-width: 2;
+  border-width: 2px;
   border-style: inset;
   border-color: #CCCCCC;
 }
 
 .input, .checkbox, .dropdown, .largeDropdown, .configtext {
-/* if the margin-left value below is changed from 22 
-   then the corresponding value at the end of the file needs to be changed accordingly */      
-  margin-left: 22;
+/* if the margin-left value below is changed from 22px 
+   then the corresponding value at the end of the file needs changing accordingly */      
+  margin-left: 22px;
 }
 
 .textbox {
@@ -92,6 +92,7 @@ squareSize_default = 40;
 lightColorHex_default = "EFF4EC";
 darkColorHex_default = "C6CEC3";
 boardBorderColorHex_default = "000000";
+boardShadowColorHex_default = "transparent";
 highlightMode_default = "square";
 highlightColorHex_default = "DAF4D7";
 buttonsDisplay_default = "hidden";
@@ -114,11 +115,49 @@ fontMovesSize_default = "100%";
 fontCommentsSize_default = "moves";
 backgroundColorHex_default = "FFFFFF";
 previewBackgroundColorHex_default = "DDDDDD";
-baseUrl_default = pgn4web_board_url;
+boardUrl_default = pgn4web_board_url;
+useTextarea_default = "f";
 
 
 // max length of the iframeUrl, if this is exceeded a warning is issued 
 iframeUrl_max = 2000;
+
+function gup( name ){
+
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";  
+  regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
+  var regex = new RegExp( regexS, "i" );
+  var results = regex.exec( window.location.href );
+  if( results !== null ) { return decodeURIComponent(results[1]); }
+
+  // allows for short version of the URL parameters, for instance sC matches squareColor
+  compact_name = name.charAt(0);
+  for(i=1; i<name.length; i++){
+    if (name.charAt(i).match(/[A-Z]/)) { compact_name = compact_name + name.charAt(i).toLowerCase(); }
+  }
+  name = compact_name;
+
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  regexS = "[\\?&]"+name+"=([^&#]*)";  
+  regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
+  regex = new RegExp( regexS, "i" );
+  results = regex.exec( window.location.href );
+  if( results !== null ) { return decodeURIComponent(results[1]); }
+
+  return "";
+}
+
+newStyleSheet = '<style type="text/css"> \n';
+newStyleSheet += '.extendedOption { display: ';
+if ((gup("extendedOptions") == "true") || (gup("extendedOptions") == "t")) {
+  newStyleSheet += 'inline';
+} else {
+  newStyleSheet += 'none';
+}
+newStyleSheet += '; } \n';
+newStyleSheet += '</style> \n';
+document.write(newStyleSheet);
 
 function new_onLoad() {
   jscolor.bind(); // needed to cope with IE bug
@@ -137,7 +176,7 @@ function set_defaults() {
     pgnText_value = DecodePGN(pgnTextEncoded);
     previousPgnTextToEncode = pgnText_value;
   } else {
-    if ((pgnText_value = decodeURIComponent(gup("pgnText"))) === "") { pgnText_value = pgnText_default; }
+    if ((pgnText_value = gup("pgnText")) === "") { pgnText_value = pgnText_default; }
     previousPgnTextToEncode = "";
   }
   document.getElementById('pgnText').value = pgnText_value;
@@ -148,9 +187,9 @@ function set_defaults() {
 
   oldAutoplayMode_value = "";
   //kept for backward compatibility
-  if (gup("loop") === "t") { oldAutoplayMode_value = "loop"; }
+  if ((gup("loop") == "true") || (gup("loop") == "t")) { oldAutoplayMode_value = "loop"; }
   //kept for backward compatibility
-  if (gup("auto") === "f") { oldAutoplayMode_value = "none"; }
+  if ((gup("auto") == "false") || (gup("loop") == "f")) { oldAutoplayMode_value = "none"; }
 
   if ((autoplayMode_value = gup("autoplayMode")) === "") {
     autoplayMode_value = oldAutoplayMode_value === "" ? autoplayMode_default : oldAutoplayMode_value;
@@ -438,6 +477,30 @@ function set_defaults() {
     validate_color(document.board.backgroundColorHex, 'background color', backgroundColorHex_default);
   }
 
+  if ((boardShadowColorHex_value = gup("boardShadowColorHex")) === "") {
+    boardShadowColorSex = gup("boardShadowColorSex");
+    if ((boardShadowColorSex == "transparent") || (boardShadowColorSex == "t")) {
+      boardShadowColorHex_value = "transparent";
+    } else if ((boardShadowColorSex == "border") || (boardShadowColorSex == "b")) {
+      boardShadowColorHex_value = "border";
+    } else {
+      if ((boardShadowColorHex_value = sex2hex(boardShadowColorSex, 'board shadow color')) === "") {
+        boardShadowColorHex_value = boardShadowColorHex_default;
+      }
+    }
+  }
+  if (boardShadowColorHex_value == "t") {
+    boardShadowColorHex_value = "transparent";
+  }
+  if (boardShadowColorHex_value == "b") {
+    boardShadowColorHex_value = "border";
+  }
+  if ((boardShadowColorHex_value == "transparent") || (boardShadowColorHex_value == "border")) {
+    document.board.boardShadowColorHex.value = boardShadowColorHex_value;
+  } else {
+    document.board.boardShadowColorHex.color.fromString(boardShadowColorHex_value);
+  }
+
   if ((horizontalLayout_value = gup("horizontalLayout")) === "") { horizontalLayout_value = horizontalLayout_default; }
   document.board.horizontalLayout.value = horizontalLayout_value == "t" ? "t" : "f";
 
@@ -464,13 +527,15 @@ function set_defaults() {
   document.board.previewBackgroundColorHex.color.fromString(previewBackgroundColorHex_value);
   validate_color(document.board.previewBackgroundColorHex, 'preview background color', previewBackgroundColorHex_default);
 
-  if ((baseUrl_value = gup("baseUrl")) === "") { baseUrl_value = baseUrl_default; }
-  document.board.baseUrl.value = baseUrl_value;
+  if ((boardUrl_value = gup("boardUrl")) === "") { boardUrl_value = boardUrl_default; }
+  document.board.boardUrl.value = boardUrl_value;
 
+  if ((useTextarea_value = gup("useTextarea")) === "") { useTextarea_value = useTextarea_default; }                   
+  document.board.useTextarea.checked = (useTextarea_value == "t");
+    
   generate_html_code();
   update_controls();
 }
-
 
 function reset_form() {
   if (confirm("do you really want to reset the board generator to the default values?\nAll your settings including the PGN text might be lost!")) { set_defaults(); }
@@ -548,24 +613,26 @@ function update_suggested_iframe_dimensions() {
     document.getElementById('frameWidth_helpText').innerHTML = "a number or <a class='helplink' style='font-weight: bold;' href='' onClick='javascript:document.board.frameWidth.value = \"board\"; return false;'>board</a> or <a class='helplink' style='font-weight: bold;' href='' onClick='javascript:document.board.frameWidth.value = \"page\"; return false;'>page</a>; min " + min_frameWidth + "; when <a class='helplink' href='' onClick='javascript:document.board.frameWidth.value = \"\"; return false;'>blank</a>, assigned to " + suggested_frameWidth + "; board width is " + boardWidth;
   }
 
-  theObject = document.getElementById('frameWidth');
-  if (theObject.value !== ""){ 
-    if (!theObject.value.match('/^[^0-9]$/')) { 
-      if (theObject.value < min_frameWidth) { 
-        alert('error: iFrame width too small');
-        theObject.value = "";
-      }
-    } else { alert('error: invalid iFrame width value'); }
-  } 
+  if (theObject = document.getElementById('frameWidth')) {
+    if (theObject.value !== ""){ 
+      if (!theObject.value.match('/^[^0-9]$/')) { 
+        if (theObject.value < min_frameWidth) { 
+          alert('error: iFrame width too small');
+          theObject.value = "";
+        }
+      } else { alert('error: invalid iFrame width value'); }
+    }
+  }
   
-  theObject = document.getElementById('frameHeight');
-  if (theObject.value !== "") { 
-    if (!theObject.value.match('/^[^0-9]$/')) { 
-      if (theObject.value < min_frameHeight) { 
-        alert('error: iFrame height too small');
-        theObject.value = "";
-      }
-    } else { alert('error: invalid iFrame height value'); }
+  if (theObject = document.getElementById('frameHeight')) {
+    if (theObject.value !== "") { 
+      if (!theObject.value.match('/^[^0-9]$/')) { 
+        if (theObject.value < min_frameHeight) { 
+          alert('error: iFrame height too small');
+          theObject.value = "";
+        }
+      } else { alert('error: invalid iFrame height value'); }
+    }
   }
 
 }
@@ -577,8 +644,8 @@ function update_pgnTextLength() {
 function calculate_html_code() {
 
   // this must be the firts item
-  baseUrl_value = document.board.baseUrl.value;
-  iframeUrl = baseUrl_value + "?";
+  boardUrl_value = document.board.boardUrl.value;
+  iframeUrl = boardUrl_value + "?";
 
   autoplayMode_value = document.board.autoplayMode.value;
   delay_value = parseInt(document.board.delay.value, 10);
@@ -611,6 +678,11 @@ function calculate_html_code() {
   iframeUrl += "&dcs=" + hex2sex(darkColorHex_value);
   boardBorderColorHex_value = document.board.boardBorderColorHex.value; 
   iframeUrl += "&bbcs=" + hex2sex(boardBorderColorHex_value);
+  boardShadowColorHex_value = document.board.boardShadowColorHex.value;
+  if (boardShadowColorHex_value != "transparent") {
+    if (boardShadowColorHex_value == "border") { iframeUrl += "&bscs=b"; }
+    else { iframeUrl += "&bscs=" + hex2sex(boardShadowColorHex_value); }
+  }
 
   highlightMode_value = document.board.highlightMode.value; 
   iframeUrl += "&hm=" + highlightMode_value.charAt(0); 
@@ -699,25 +771,30 @@ function calculate_html_code() {
   } else {
     iframeUrl += "&fw=" + frameWidth_value;
   }
-  
-  pgnText_value = pgnTextFixFromInput(document.getElementById('pgnText').value);
-  if ((document.board.encodePgn.checked) && (pgnText_value != previousPgnTextToEncode)) {
-    previousPgnTextToEncode = pgnText_value;
-    pgnTextEncoded = EncodePGN(pgnText_value.replace(/\r\n/g,'\n'));
-  }
-  if (document.board.encodePgn.checked) { iframeUrl += "&pe=" + pgnTextEncoded; }
-  else { iframeUrl += "&pt=" + pgnTextFixForUrl(pgnText_value.replace(/\r\n/g,'\n')); }
 
+  pgnText_value = pgnTextFixFromInput(document.getElementById('pgnText').value);
+  if (document.board.useTextarea.checked) {
+    pgnId = "pgn4web_" + printHex(crc32(pgnText_value));
+    iframeUrl += "&pi=" + pgnId;
+  } else {
+    if ((document.board.encodePgn.checked) && (pgnText_value != previousPgnTextToEncode)) {
+      previousPgnTextToEncode = pgnText_value;
+      pgnTextEncoded = EncodePGN(pgnText_value.replace(/\r\n/g,'\n'));
+    }
+    if (document.board.encodePgn.checked) { iframeUrl += "&pe=" + pgnTextEncoded; }
+    else { iframeUrl += "&pt=" + pgnTextFixForUrl(pgnText_value.replace(/\r\n/g,'\n')); }
+  }
+  
   // every parameter had an &xxx= format,now we need to remove the first &
   iframeUrl = iframeUrl.replace(/\?&/,"?");
 }
 
 function pgnTextFixFromInput( text ) {
-    
-  text = text.replace(/\u2026/g,'...'); // replace ellipsis char with ...
-  text = text.replace(/\u2011/g,'-'); // replace non breaking hyphen with -
-  text = text.replace(/[\u0100-\uFFFF]+/g, "*"); // replace all chars with code greather than 255 with *
 
+  text = fixCommonPgnMistakes(text);
+  if (!document.board.useTextarea.checked) {
+    text = text.replace(/[\u0100-\uFFFF]/g,"*"); // replace all chars with code greather than 255 with *
+  }
   return text;
 }
 
@@ -774,8 +851,12 @@ function generate_html_code() {
       outerFrameHeight = frameHeight_value;
       break;
   }
-
-  html_code_string = "<iframe height='" + outerFrameHeight + "' width='" + outerFrameWidth + "' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'";
+  
+  html_code_string = "";
+  if (document.getElementById('useTextarea').checked) {
+    html_code_string += "<textarea id=" + pgnId + " style='display: none;'>\n\n" + pgnText_value + "\n\n</textarea>\n\n";
+  }
+  html_code_string += "<iframe height='" + outerFrameHeight + "' width='" + outerFrameWidth + "' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'";
   if (document.getElementById('backgroundColorHex').value == 'transparent') {
     html_code_string += " allowtransparency='true'";
   }
@@ -783,20 +864,28 @@ function generate_html_code() {
   
   document.getElementById('html_code').value = html_code_string;
 
+  boardUrl_value = document.board.boardUrl.value;
   thisBookmarkUrl = iframeUrl;
-  thisBookmarkUrl = thisBookmarkUrl.replace(pgn4web_board_url,pgn4web_generator_url);
+  thisBookmarkUrl = thisBookmarkUrl.replace(boardUrl_value, pgn4web_generator_url);
   thisBookmarkUrl = thisBookmarkUrl.replace(/&(pe|pt)=.*(&|$)/,"");
 
   if (document.getElementById('encodePgn').checked) { encodePgn_value = "t"; }
   else { encodePgn_value = "f"; }
   if (encodePgn_value != encodePgn_default) { thisBookmarkUrl += "&ep=" + encodePgn_value; }
 
-  baseUrl_value = document.board.baseUrl.value;
-  if (baseUrl_value != baseUrl_default) { thisBookmarkUrl += "&bu=" + baseUrl_value; }
+  if (boardUrl_value != boardUrl_default) { thisBookmarkUrl += "&bu=" + boardUrl_value; }
+
+  if (document.getElementById('useTextarea').checked) { useTextarea_value = "t"; }
+  else { useTextarea_value = "f"; }
+  if (useTextarea_value != useTextarea_default) { thisBookmarkUrl += "&ut=" + useTextarea_value; }
 
   previewBackgroundColorHex_value = document.board.previewBackgroundColorHex.value;
   if (previewBackgroundColorHex_value != previewBackgroundColorHex_default) { 
     thisBookmarkUrl += "&pbcs=" + hex2sex(previewBackgroundColorHex_value);
+  }
+  
+  if ((gup("extendedOptions") == "true") || (gup("extendedOptions") == "t")) {
+    thisBookmarkUrl += "&eo=t";
   }
 
   document.getElementById('thisConfigBookmark').href = thisBookmarkUrl;
@@ -830,7 +919,6 @@ function generate_html_code() {
   location.href='#generate'; return;
 }
 
-
 function validate_color(object, name, def) {
   if (object.value.match(/^[0-9A-Fa-f]{6}$/)) {
     return true;
@@ -848,8 +936,24 @@ function validate_highlightMoveColorHex() {
     return true;
   } else { 
     alert('error: the move highlight color must be \'background\' or a six digits hexadecimal color code, like FF0000');
-    object.color.fromString(highlightMoveColorHex_default);
+    if (highlightMoveColorHex_default == 'background') { object.value = highlightMoveColorHex_default; }
+    else { object.color.fromString(highlightMoveColorHex_default); }
     return false;    
+  }
+}
+
+function validate_boardShadowColorHex() {
+  object = document.getElementById('boardShadowColorHex');
+  if (object.value == 'transparent') { return true; }
+  if (object.value == 'border') { return true; }
+  if (object.value.match(/^[0-9A-Fa-f]{6}$/)) {
+    return true;
+  } else { 
+    alert('error: the board shadow color must be \'transparent\' or \'border\' or a six digits hexadecimal color code, like FF0000');
+    if ((boardShadowColorHex_default == 'transparent') || (boardShadowColorHex_default == 'border')) {
+      object.value = boardShadowColorHex_default;
+    } else { object.color.fromString(boardShadowColorHex_default); }
+    return false;
   }
 }
 
@@ -860,7 +964,8 @@ function validate_backgroundColorHex() {
     return true;
   } else { 
     alert('error: the move highlight color must be \'transparent\' or a six digits hexadecimal color code, like FF0000');
-    object.color.fromString(backgroundColorHex_default);
+    if (backgroundColorHex_default == 'transparent') { object.value = backgroundColorHex_default; }
+    else { object.color.fromString(backgroundColorHex_default); }
     return false;
   }
 }
@@ -964,7 +1069,7 @@ function validate_frameHeight() {
 function validate_ss_ps_hm() {
   retval = true;
   if (document.getElementById('highlightMode').value == 'border') {
-    minSquareSize = 22; 
+    minSquareSize = 22;
   } else {
     minSquareSize = 20;
   }
@@ -1061,9 +1166,10 @@ common_template = "?am=l&d=3000&fh=&fw=";
 color_template = new Array();
 color_template[0] = new Array("blue ", "&lcs=VdyD&dcs=LHCg&bbcs=LHCg&bd=c&cbcs=PYGy&ctcs=l4It&fhcs=$$$$&fmcs=$$$$&fccs=v71$&hmcs=M___&bcs=VdyD", "&hcs=QtmS", "&hcs=s8pI");
 color_template[1] = new Array("brown", "&lcs=XItn&dcs=NpQK&bbcs=NpQK&bd=c&cbcs=__iz&ctcs=NpQK&fhcs=k03b&fmcs=k03b&fccs=DRYC&hmcs=__X$&bcs=____", "&hcs=MWVi", "&hcs=__X$");
-color_template[2] = new Array("gray ", "&lcs=YeiP&dcs=Qcij&bbcs=D91v&bd=s&cbcs=YeiP&ctcs=$$$$&fhcs=$$$$&fmcs=$$$$&fccs=v71$&hmcs=Qcij&bcs=____", "&hcs=Udiz", "&hcs=s6gP");
+color_template[2] = new Array("gray ", "&lcs=YeiP&dcs=Qcij&bbcs=D91v&bscs=Lb2$&bd=s&cbcs=YeiP&ctcs=$$$$&fhcs=$$$$&fmcs=$$$$&fccs=v71$&hmcs=Qcij&bcs=____", "&hcs=Udiz", "&hcs=s6gP");
 color_template[3] = new Array("green", "&lcs=W_iH&dcs=MHW2&bbcs=MHW2&bd=c&cbcs=UtKy&ctcs=x7x7&fhcs=g3g3&fmcs=7x7x&fccs=v71$&hmcs=RKim&bcs=W_iH", "&hcs=RKim", "&hcs=waRy");
 color_template[4] = new Array("pink ", "&lcs=Wtyk&dcs=OXJO&bbcs=OXJO&bd=c&cbcs=UJ2e&ctcs=nkYj&fhcs=nkYi&fmcs=nkYi&fccs=DoRa&hmcs=ZbNv&bcs=Wtyk", "&hcs=UIFV", "&hcs=ZbNv");
+color_template[5] = new Array("wood ", "&lcs=_XNo&dcs=O8AB&bbcs=O8AB&bscs=b&bd=s&cbcs=YeiP&ctcs=$$$$&fhcs=$$$$&fmcs=$$$$&fccs=v71$&hmcs=_XNo&bcs=____", "&hcs=r4fT", "&hcs=r4fT");
 
 // size template array
 size_template = new Array();
@@ -1095,7 +1201,7 @@ function load_templates() {
 	 template_value += size_template[ss][1];
 	 template_value += color_template[cc][1];
          template_value += template_value.match("&hm=b") ? color_template[cc][3] : color_template[cc][2];
-	 if (color_template[cc][0].match("gray")) { 
+	 if (color_template[cc][0].match("(gray|wood)")) { 
 	   template_value = template_value.replace(/hm=(s|b)/,"hm=n");
 	 }
 	 add_option(theObject, template_text, template_value); 
@@ -1117,10 +1223,23 @@ function template_selected() {
 	  
     newLocationSearch = document.getElementById('templatesList').options[selectedIndex].value;
 
+    if (document.board.boardUrl.value != boardUrl_default) {
+      newLocationSearch += "&bu=" + document.board.boardUrl.value;
+    }
+
+    if (( document.getElementById('useTextarea').checked && (useTextarea_default != "t")) || 
+        (!document.getElementById('useTextarea').checked && (useTextarea_default != "f")) ) {
+      newLocationSearch += "&ut=" + (document.board.useTextarea.checked ? "t" : "f");
+    }
+
     pgnText_value = document.getElementById('pgnText').value;
     if ((document.board.encodePgn.checked) && (pgnText_value != previousPgnTextToEncode)) {
        previousPgnTextToEncode = pgnText_value;
        pgnTextEncoded = EncodePGN(pgnText_value);
+    }
+    if (( document.getElementById('encodePgn').checked && (encodePgn_default != "t")) || 
+        (!document.getElementById('encodePgn').checked && (encodePgn_default != "f")) ) {
+      newLocationSearch += "&ep=" + (document.board.encodePgn.checked ? "t" : "f");
     }
     newLocationSearch += document.board.encodePgn.checked ? 
                          "&pe=" + pgnTextEncoded :
@@ -1169,33 +1288,6 @@ function hex2sex(hex) {
   return sex;
 }
 
-
-function gup( name ){
-
-  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regexS = "[\\?&]"+name+"=([^&#]*)";  
-  regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
-  var regex = new RegExp( regexS );
-  var results = regex.exec( window.location.href );
-  if( results !== null ) { return results[1]; }
-
-  // allows for short version of the URL parameters, for instance sC matches squareColor
-  compact_name = name.charAt(0);
-  for(i=1; i<name.length; i++){
-    if (name.charAt(i).match(/[A-Z]/)) { compact_name = compact_name + name.charAt(i).toLowerCase(); }
-  }
-  name = compact_name;
-
-  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  regexS = "[\\?&]"+name+"=([^&#]*)";  
-  regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
-  regex = new RegExp( regexS );
-  results = regex.exec( window.location.href );
-  if( results !== null ) { return results[1]; }
-
-  return "";
-}
-
 var bugWin=null;
 function bug_report() {
   var email = pgn4web_project_email;
@@ -1242,6 +1334,7 @@ function print_menu( item, level, title ) {
   menu += '&nbsp; &nbsp;<a href=#board_options>board</a>';
   menu += '&nbsp; &nbsp;<a href=#header_moves_options>header and moves</a>';
   menu += '&nbsp; &nbsp;<a href=#page_options>page</a>';
+  menu += '<span class="extendedOption">&nbsp; &nbsp;<a href=#url_options>URL</a></span>';
   menu += '</div>';
   menu += '</td></tr></table>';
   document.write(menu); 
@@ -1262,13 +1355,14 @@ window.onload = new_onLoad;
 <div style="height: 1em">&nbsp;</div>
 <script type="text/javascript">print_menu("instructions", 2, "instructions");</script>
 
-<ul type="square" style="text-align: justify;">
+<ul type="square" style="text-align: justify; font-size: smaller;">
 	
 <li>
 <a href=#pgn_form><b>enter your PGN text</b> in the green textbox below</a>
   <ul type="square">
   <li>keep PGN data short: due to a limitation of web browsers and web servers with the URL length, only short PGN texts are allowed, usually up to four games without comments; a warning is issued if the max URL length is exceeded, in case try removing unnecessary header tags and comments/variations or try reducing the number of games per chessboard</li>
   <li>beware of "[" and "]" characters in the game text/comments: if square brackets are present in the comments (or the game text) in a pattern similar to the PGN header pattern <code>[tag "value"]</code> then the game parsing might break; if your PGN file is not displayed properly, please check for characters "[" and "]" in the comments and try removing them</li>
+  <li>by default the PGN data is compressed and encoded, with characters outside the 255 characters ascii set rejected and replaced with stars "*". This might affect some non English text and names</li>
   <li>in case of errors in the supplied PGN data, the chessboard squares starts flashing at regular intervals to signal the exception; detailed debug information is available clicking the top left chessboard square (A8 assuming White on bottom, H1 otherwise)</li>
   </ul>
 </li>
@@ -1332,7 +1426,7 @@ if something goes wrong, you might want to <i><a href="javascript:bug_report()">
 <div style="font-weight: bold; margin-bottom:6;">automatically generated HTML code for your web page or blog</div>
 <textarea readonly id="html_code" name="html_code" rows=15 class="textbox" style="background-color: #FFFFCC; scrollbar-base-color: #FFFFCC;"></textarea>
 <div id="html_code_status">&nbsp;</div>
-<div style="margin-top:1em;"><a id="shorturl_link" style="font-weight: bold;" href="javascript:document.forms['shorturl'].submit();">click here to create a short url for sharing the chessboard via email or instant messaging</a></div>
+<div style="margin-top:1em;"><a id="shorturl_link" style="font-weight: bold;" href="javascript:if(!document.board.useTextarea.checked){document.forms['shorturl'].submit();}else{alert('URL sharing creation unavailable when useTextarea is enabled')}">click here to create a short url for sharing the chessboard via email or instant messaging</a></div>
 <p></p>
 <br>
 
@@ -1369,16 +1463,6 @@ if something goes wrong, you might want to <i><a href="javascript:bug_report()">
 </tr></table>
 <p></p>
 
-<!--
-
-<input class="checkbox" type="checkbox" id="encodePgn" name="checkbox" />
-&nbsp;&nbsp; encode PGN text &nbsp;&nbsp;
-<span class="helptext">encode the PGN text to a URL friendly format (this should be normally enabled)</span>
-<p></p>
-
--->
-<input type="hidden" id="encodePgn" />
-
 <div style="height: 3em">&nbsp;</div>
 <script type="text/javascript">print_menu("templates", 3, "templates");</script>
 <div style="height: 1em">&nbsp;</div>
@@ -1409,11 +1493,13 @@ if something goes wrong, you might want to <i><a href="javascript:bug_report()">
 <option value="none">none</option>
 </select>
 &nbsp;&nbsp; autoplay games &nbsp;&nbsp;
-<span class="helptext">
+<span class="helptext">autoplay first
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.autoplayMode.value = 'game'; return false;">game</a>
-autoplays the first game once,
+once, or 
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.autoplayMode.value = 'loop'; return false;">loop</a>
-loops through games continiously</span>
+continiously, or autoplay
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.autoplayMode.value = 'none'; return false;">none</a>
+</span>
 <p></p>
 
 <select class="dropdown" id="delay" name="dropdown">
@@ -1448,12 +1534,12 @@ loops through games continiously</span>
 	<option value="number">custom number</option>
 </select>
 &nbsp;&nbsp; initial halfmove &nbsp;&nbsp;
-<span class="helptext"><b>always</b> settings apply at every game load, <b>once</b> settings only at the first load</span>
+<span class="helptext"><i>always</i> settings apply at every game load, <i>once</i> settings only at the first load</span>
 <p></p>
 
 <input  class="input" type="text" id="initialHalfmoveNumber" name="input" value="" size="12" onChange="javascript:setInitialHalfmove();">
 &nbsp;&nbsp; initial halfmove number &nbsp;&nbsp;
-<span class="helptext">actual halfmove number applied when the setting above is
+<span class="helptext">actual halfmove number when the setting above is
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.initialHalfmoveSelect.value = 'number'; setInitialHalfmove(); return false;">custom number</a>
 </span>
 <p></p>
@@ -1531,16 +1617,26 @@ selects piece font based on piece size</span>
 <p></p>
 <br>
 
-<input class="color input" type="text" id="lightColorHex" name="input" value="" size="12" onChange="validate_color(this, 'light squares color', lightColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="lightColorHex" name="input" value="" size="12" onChange="validate_color(this, 'light squares color', lightColorHex_default)">
 &nbsp;&nbsp; light squares color &nbsp;&nbsp;
 <p></p>
 
-<input class="color input" type="text" id="darkColorHex" name="input" value="" size="12" onChange="validate_color(this, 'dark squares color', darkColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="darkColorHex" name="input" value="" size="12" onChange="validate_color(this, 'dark squares color', darkColorHex_default)">
 &nbsp;&nbsp; dark squares color &nbsp;&nbsp;
 <p></p>
 
-<input class="color input" type="text" id="boardBorderColorHex" name="input" value="" size="12" onChange="validate_color(this, 'board border color', boardBorderColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="boardBorderColorHex" name="input" value="" size="12" onChange="validate_color(this, 'board border color', boardBorderColorHex_default)">
 &nbsp;&nbsp; board border color &nbsp;&nbsp;
+<p></p>
+
+<input class="color {adjust:false} input" type="text" id="boardShadowColorHex" name="input" value="" size="12" onChange="validate_boardShadowColorHex()">
+&nbsp;&nbsp; board shadow color &nbsp;&nbsp;
+<span class="helptext">a color;
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.boardShadowColorHex.color.fromString('FFFFFF'); document.board.boardShadowColorHex.value = 'transparent'; return false;">transparent</a>
+disables the shadow,
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.boardShadowColorHex.color.fromString('FFFFFF'); document.board.boardShadowColorHex.value = 'border'; return false;">border</a>
+copies the board border color
+</span>
 <p></p>
 
 <select class="dropdown" id="highlightMode" name="dropdown" onChange="validate_ss_ps_hm(); update_controls();">
@@ -1549,9 +1645,6 @@ selects piece font based on piece size</span>
 <option value="none">none</option>
 </select>
 &nbsp;&nbsp; square highlight mode &nbsp;&nbsp;
-<span class="helptext">when set  to
-<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.highlightMode.value = 'border'; validate_ss_ps_hm(); update_controls(); return false;">border</a>
-a larger square size might be required</span>
 <p></p>
 
 <input class="color {adjust:false} input" type="text" id="highlightColorHex" name="input" value="" size="12" onChange="validate_color(this, 'highlight squares color', highlightColorHex_default)">
@@ -1565,18 +1658,20 @@ a larger square size might be required</span>
 <option value="custom">custom</option>
 </select>
 &nbsp;&nbsp; how to show control buttons &nbsp;&nbsp;
-<span class="helptext">
+<span class="helptext">browser's
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.buttonsDisplay.value = 'standard'; update_controls(); return false;">standard</a>
-uses browser's buttons,
+buttons, or 
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.buttonsDisplay.value = 'custom'; update_controls(); return false;">custom</a>
-uses colors below</span>
+colors below, or 
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.buttonsDisplay.value = 'hidden'; update_controls(); return false;">hidden</a>
+buttons</span>
 <p></p>
 
 <input class="color {adjust:false} input" type="text" id="controlBackgroundColorHex" name="input" value="" size="12" onChange="validate_color(this, 'control buttons background color', controlBackgroundColorHex_default); update_controls()">
 &nbsp;&nbsp; custom control buttons background color &nbsp;&nbsp;
 <p></p>
 
-<input class="color input" type="text" id="controlTextColorHex" name="input" value="" size="12" onChange="validate_color(this, 'control buttons text color', controlTextColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="controlTextColorHex" name="input" value="" size="12" onChange="validate_color(this, 'control buttons text color', controlTextColorHex_default)">
 &nbsp;&nbsp; custom control buttons text color &nbsp;&nbsp;
 
 <div style="height: 3em">&nbsp;</div>
@@ -1602,7 +1697,7 @@ uses colors below</span>
 <span class="helptext">a number or a percentage</span>
 <p></p>
 
-<input class="color input" type="text" id="fontHeaderColorHex" name="input" value="" size="12" onChange="validate_color(this, 'header font color', fontHeaderColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="fontHeaderColorHex" name="input" value="" size="12" onChange="validate_color(this, 'header font color', fontHeaderColorHex_default)">
 &nbsp;&nbsp; header font color &nbsp;&nbsp;
 <p></p>
 <br>
@@ -1619,16 +1714,16 @@ uses colors below</span>
 <span class="helptext">a number or a percentage</span>
 <p></p>
 
-<input class="color input" type="text" id="fontMovesColorHex" name="input" value="" size="12" onChange="validate_color(this, 'moves font color', fontMovesColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="fontMovesColorHex" name="input" value="" size="12" onChange="validate_color(this, 'moves font color', fontMovesColorHex_default)">
 
 &nbsp;&nbsp; moves font color &nbsp;&nbsp;
 <p></p>
 
 <input class="color {adjust:false} input" type="text" id="highlightMoveColorHex" name="input" value="" size="12" onChange="validate_highlightMoveColorHex()">
 &nbsp;&nbsp; highlight move color &nbsp;&nbsp;
-<span class="helptext">when set to
+<span class="helptext">a color;
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.highlightMoveColorHex.color.fromString('FFFFFF'); document.board.highlightMoveColorHex.value = 'background'; return false;">background</a>
-the background color is copied</span>
+copies the background color</span>
 <p></p>
 <br>
 
@@ -1639,20 +1734,22 @@ the background color is copied</span>
 </select>
 &nbsp;&nbsp; how to show move comments &nbsp;&nbsp;
 <span class="helptext">
-<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.commentsDisplay.value = 'inline'; return false;">inline</a>:
-on same line as moves,
-<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.commentsDisplay.value = 'newline'; return false;">newline</a>:
-on separate lines</span>
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.commentsDisplay.value = 'inline'; return false;">inline</a>
+inbetween game moves, or on a 
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.commentsDisplay.value = 'newline'; return false;">newline</a>
+, or
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.commentsDisplay.value = 'hidden'; return false;">hidden</a>
+</span>
 <p></p>
 
 <input class="input" type="text" id="fontCommentsSize" name="input" value="" size="12" onChange="validate_fontCommentsSize();">
 &nbsp;&nbsp; comments font size &nbsp;&nbsp;
-<span class="helptext">a number or a percentage; when set to
+<span class="helptext">a number or a percentage;
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.fontCommentsSize.value = 'moves'; return false;">moves</a>
-the moves font size is copied</span>
+copies the moves font size</span>
 <p></p>
 
-<input class="color input" type="text" id="fontCommentsColorHex" name="input" value="" size="12" onChange="validate_color(this, 'comments font color', fontCommentsColorHex_default)">
+<input class="color {adjust:false} input" type="text" id="fontCommentsColorHex" name="input" value="" size="12" onChange="validate_color(this, 'comments font color', fontCommentsColorHex_default)">
 &nbsp;&nbsp; comments font color &nbsp;&nbsp;
 
 <div style="height: 3em">&nbsp;</div>
@@ -1684,35 +1781,57 @@ the moves font size is copied</span>
 <p></p>
 <br>
 
-<input class="color input" type="text" id="backgroundColorHex" name="input" value="" size="12" onChange="validate_backgroundColorHex()">
+<input class="color {adjust:false} input" type="text" id="backgroundColorHex" name="input" value="" size="12" onChange="validate_backgroundColorHex()">
 &nbsp;&nbsp; background color &nbsp;&nbsp;
-<span class="helptext">when set to
+<span class="helptext">a color;
 <a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.backgroundColorHex.color.fromString('FFFFFF'); document.board.backgroundColorHex.value = 'transparent'; return false;">transparent</a>
-the parent's background color is used</span>
+uses the parent's background color</span>
 <p></p>
 
-<!--
+<!-- hiding preview background color -->
+<span class="extendedOption">
 
-<input class="color input" type="text" id="previewBackgroundColorHex" name="input" value="" size="12" onChange="validate_color(this, 'preview background color', previewBackgroundColorHex_default)"> 
+<input class="color {adjust:false} input" type="text" id="previewBackgroundColorHex" name="input" value="" size="12" onChange="validate_color(this, 'preview background color', previewBackgroundColorHex_default)"> 
 &nbsp;&nbsp; preview background color &nbsp;&nbsp;
 <span class="helptext">not actually used in the HTML code, just for the preview</span>
 <p></p>
-<br>
 
--->
-<input class="color input" type="hidden" id="previewBackgroundColorHex" value"DDDDDD">
+</span>
+<!-- end hiding preview background color -->
 
-<!--
+<!-- hiding URL options -->
+<span class="extendedOption">
 
-<h3><a name=url_options>URL options</a></h3>
+<div style="height: 3em">&nbsp;</div>                                                                         
+<script type="text/javascript">print_menu("url_options", 3, "URL options");</script>                 
+<div style="height: 1em">&nbsp;</div>
 
-base URL: &nbsp;&nbsp;
-<input type="text" id="baseUrl" name="baseUrl" value="" style="width: 100%" />
+<input class="checkbox" type="checkbox" id="useTextarea" name="checkbox" />
+&nbsp;&nbsp; use HTML textarea &nbsp;&nbsp;
+<span class="helptext">normally
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.useTextarea.checked = false; return false;">disabled</a>
+unless the board widget is on the same server with a local <i>base URL</i></span>
 <p></p>
-<br>
 
--->
-<input type="hidden" id="baseUrl" value="" />
+<input class="checkbox" type="checkbox" id="encodePgn" name="checkbox" />
+&nbsp;&nbsp; encode PGN text &nbsp;&nbsp;
+<span class="helptext">normally
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.encodePgn.checked = true; return false;">enabled</a>
+unless <i>use HTML textarea</i> is enabled</span>
+<p></p>
+
+<input class="input" type="text" id="boardUrl" name="boardUrl" value="" size="12">
+&nbsp;&nbsp; board URL &nbsp;&nbsp;
+<span class="helptext">normally as
+<a class="helplink" style="font-weight: bold;" href="" onClick="javascript:document.board.boardUrl.value = boardUrl_default; return false;">default</a>
+unless enabling <i>use HTML textarea</i> or using board widget from different server</span>
+<p></p>
+
+</span>
+<!-- end hiding URL options -->
+
+<!-- hidden checkbox for calculating width -->
+<input class="checkbox" type="checkbox" id="hiddenCheckbox" name="checkbox" style="visibility: hidden;" />
 
 <script type="text/javascript">
 
@@ -1722,16 +1841,12 @@ for (ii = 0; ii < theObject.length; ii++) {
   theObject[ii].style.width = inputWidth;
 }
 
-/* no more checkboxes left 
-
-checkboxWidth = document.getElementById('encodePgn').offsetWidth;
+checkboxWidth = document.getElementById('hiddenCheckbox').offsetWidth;
 // the last number added to marginLeft should be equal to the value of the .checkbox style at the top
 theObject = document.getElementsByName('checkbox');
 for (ii = 0; ii < theObject.length; ii++) {
   theObject[ii].style.marginLeft +=  inputWidth - checkboxWidth + 22;
 }
-
- */
 
 </script>
 

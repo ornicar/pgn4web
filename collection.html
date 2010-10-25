@@ -55,12 +55,12 @@
        pgnSearchTarget = "";
    }
 
-   SetImagePath("uscf/32"); // use "" path if images are in the same folder as this javascript file
+   SetImagePath("alpha/36"); // use "" path if images are in the same folder as this javascript file
    SetImageType("png");
-   SetHighlightOption(true); // true or false
+   SetHighlightOption(false); // true or false
    SetGameSelectorOptions(" Event         Site          Rd  White            Black            Res  Date", true, 12, 12, 2, 15, 15, 3, 10); // (head, num, chEvent, chSite, chRound, chWhite, chBlack, chResult, chDate);   
    SetCommentsIntoMoveText(false);
-   SetCommentsOnSeparateLines(true);
+   SetCommentsOnSeparateLines(false);
    SetAutoplayDelay(1000); // milliseconds
    SetAutostartAutoplay(false);
    SetAutoplayNextGame(false); // if set, move to the next game at the end of the current game during autoplay
@@ -69,18 +69,18 @@
    SetShortcutKeysEnabled(true);
 
    function customFunctionOnPgnTextLoad() {
-     document.getElementById('numGm').innerHTML = numberOfGames;
-     theObject = document.getElementById('searchPgnExpression');
-     if (theObject) {
-       theObject.value = pgnSearchTarget;
-     }
+     if (theObject = document.getElementById('numGm')) { theObject.innerHTML = numberOfGames; }
      searchPgnGame(pgnSearchTarget);
    }
-   function customFunctionOnPgnGameLoad() { 
-     document.getElementById('currGm').innerHTML = currentGame+1;
-     document.getElementById('numPly').innerHTML = PlyNumber; 
+
+   function customFunctionOnPgnGameLoad() {
+     if (theObject = document.getElementById('currGm')) { theObject.innerHTML = currentGame+1; }
+     if (theObject = document.getElementById('numPly')) { theObject.innerHTML = PlyNumber; }
    }
-   function customFunctionOnMove() { document.getElementById('currPly').innerHTML = CurrentPly; }
+
+   function customFunctionOnMove() {
+     if (theObject = document.getElementById('currPly')) { theObject.innerHTML = CurrentPly; }
+   }
 
 </script>
 
@@ -117,7 +117,7 @@ document.write(pgnTitle);
 
 <tr valign=top>
 
-<td class="containerCell" align="center" width=50%>
+<td class="containerCell" align="left" width=50%>
 <div id="GameBoard"></div>
 <p></p>
 <div id="GameButtons"></div>
@@ -125,53 +125,46 @@ document.write(pgnTitle);
 
 <td class="containerCell" width=50% style="text-align: left;">
 
-<span class="label">Event:</span> <span id="GameEvent"></span> 
-<br>
-<span class="label">Site:</span> <span id="GameSite"></span> 
-<p></p>
-<span class="label">Round:</span> <span id="GameRound"></span> 
-<br>
-<span class="label">Date:</span> <span id="GameDate"></span> 
-<p></p>
-<span class="label">White:</span> <span id="GameWhite" style="font-weight: bold;"></span> 
-<br>
-<span class="label">Black:</span> <span id="GameBlack" style="font-weight: bold;"></span> 
-<p></p>
-<span class="label">Result:</span> <span id="GameResult" style="font-weight: bold;"></span> 
-<p></p>
-<span class="label">Side to move:</span> <span id="GameSideToMove"></span> 
-<br>
-<span class="label">Last move:</span> <span class="move"><span id="GameLastMove"></span></span> 
-<br>
-<span class="label">Next move:</span> <span class="move"><span id="GameNextMove"></span></span> 
-<!--
-<p></p>
-<span class="label">Move comment:</span><br><span id="GameLastComment"></span>
--->
-
-</td>
-
-</tr>
-
-<tr valign=top>
-<td class="containerCell" style="text-align: justify;" colspan=2>
-<span id="GameText"></span>
-</td>
-</tr>
-
-<tr valign=top>
-<td class="containerCell">
-<div class="label" style="text-align: left; color: #d3d3d3;">
+<table>
+<tr><td class="label">date</td><td><span id="GameDate"></span></td></tr> 
+<tr><td class="label">site</td><td><span style="white-space: nowrap;" id="GameSite"></span></td></tr>
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">event</td><td><span style="white-space: nowrap;" id="GameEvent"></span></td></tr>
+<tr><td class="label">round</td><td><span id="GameRound"></span></td></tr> 
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">white</td><td class="boldItem"><span style="white-space: nowrap;" id="GameWhite"></span></td></tr> 
+<tr><td class="label">black</td><td class="boldItem"><span style="white-space: nowrap;" id="GameBlack"></span></td></tr> 
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">result</td><td class="boldItem"><span id="GameResult"></span></td></tr> 
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">side</td><td><span id="GameSideToMove"></span></td></tr> 
+<tr><td class="label">last</td><td><span class="move"><span id="GameLastMove"></span></span></td></tr> 
+<tr><td class="label">next</td><td><span class="move"><span id="GameNextMove"></span></span></td></tr> 
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">ply</td><td><span id=currPly>0</span> (<span id=numPly>0</span>)</td></tr>
+<tr><td class="label">game</td><td><span id=currGm>0</span> (<span id=numGm>0</span>)</td></tr> 
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">archive</td>
+<td>
 <script type="text/javascript">
-document.write(pgnFilename);
+  if (pgnFilename) { 
+    document.write('<a class="linkItem" href="' + pgnFilename + '">' + pgnFilename + '</a>');
+  }
 </script>
-</div>
 </td>
-<td class="containerCell">
-<div class="label" style="text-align: right; color: #d3d3d3;">
-ply:<span id=currPly>0</span>/<span id=numPly>0</span> 
-game:<span id=currGm>0</span>/<span id=numGm>0</span> 
-</div>
+<!--
+<tr><td colspan=2 class="rowSpace"></td></tr>
+<tr><td class="label">Move comment</td><td><span id="GameLastComment"></span></td></tr>
+-->
+</table>
+
+</td>
+
+</tr>
+
+<tr valign=top>
+<td class="gametextContainerCell" style="text-align: justify;" colspan=2>
+<div class="gametextDiv" id="GameText"></div>
 </td>
 </tr>
 

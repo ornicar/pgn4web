@@ -24,7 +24,7 @@
 <script src="pgn4web.js" type="text/javascript"></script>
 <script type="text/javascript">
    SetPgnUrl(""); // if set, this has precedence over the inline PGN below
-   SetImagePath("alpha/24"); // use "" path if images are in the same folder as this javascript file
+   SetImagePath ("alpha/24"); // use "" path if images are in the same folder as this javascript file
    SetImageType("png");
 // SetHighlightOption(true); // true or false
    SetGameSelectorOptions("Select a KK game...", false, 0, 8, 0, 0, 0, 0, 10); // (head, num, chEvent, chSite, chRound, chWhite, chBlack, chResult, chDate);
@@ -33,7 +33,7 @@
    SetAutoplayDelay(2500); // milliseconds
    SetAutostartAutoplay(true);
    SetAutoplayNextGame(true); // if set, move to the next game at the end of the current game during autoplay
-// SetInitialGame(1); // number of game to be shown at load, from 1 (default); values (keep the quotes) of "first", "last", "random" are accepted; other string values assumed as PGN search string
+   SetInitialGame("random"); // number of game to be shown at load, from 1 (default); values (keep the quotes) of "first", "last", "random" are accepted; other string values assumed as PGN search string
 // SetInitialHalfmove(0,false); // halfmove number to be shown at load, 0 (default) for start position; values (keep the quotes) of "start", "end", "random" and "comment" (go to first comment) are also accepted. Second parameter if true applies the setting to every selected game instead of startup only (default)
    SetShortcutKeysEnabled(false);
 </script>
@@ -49,7 +49,7 @@
 
 [Event "Wch"]
 [Site "Moscow"]
-[Date "1985.01.17"]
+[Date "1985.10.15"]
 [Round "16"]
 [White "Karpov"]
 [Black "Kasparov"]
@@ -65,7 +65,7 @@ Rf4 Ne4 34. Qxd3 Nf2+ 35. Rxf2 Bxd3 36. Rfd2 Qe3 37. Rxd3 Rc1 38. Nb2 Qf2
 
 [Event "Wch"]
 [Site "London"]
-[Date "1986.01.12"]
+[Date "1986.08.25"]
 [Round "11"]
 [White "Karpov"]
 [Black "Kasparov"]
@@ -81,7 +81,7 @@ Rxe3 Rf2 39. b3 Rxg2+ 40. Kf3 Rxa2 41. bxa4 1/2-1/2
 
 [Event "Wch"]
 [Site "Sevilla"]
-[Date "1986.10.14"]
+[Date "1987.10.14"]
 [Round "2"]
 [White "Kasparov"]
 [Black "Karpov"]
@@ -96,7 +96,7 @@ Qxe1 Ne3 0-1
 
 [Event "Wch"]
 [Site "Sevilla"]
-[Date "1987.01.24"]
+[Date "1987.12.16"]
 [Round "23"]
 [White "Karpov"]
 [Black "Kasparov"]
@@ -115,7 +115,7 @@ Rxg1 57. Bxc5 d3 1-0
 
 [Event "Wch"]
 [Site "New York"]
-[Date "1990.01.05"]
+[Date "1990.10.17"]
 [Round "4"]
 [White "Kasparov"]
 [Black "Karpov"]
@@ -131,7 +131,7 @@ Nxf8+ Kg8 39. Ng6 Qf7 40. Ne7+ Kf8 41. Ng6+ 1/2-1/2
 
 [Event "Wch"]
 [Site "Lyon"]
-[Date "1990.01.21"]
+[Date "1990.12.15"]
 [Round "20"]
 [White "Kasparov"]
 [Black "Karpov"]
@@ -148,6 +148,7 @@ Rxa8 Be7 39. Rb8 a5 40. Be4+ Kxf7 41. Bxd5+ 1-0
 
 </span>
 <!-- paste your PGN above and make sure you dont specify an external source with SetPgnUrl() -->
+
 
 <center>
 <b><span id="GameWhite"></span>&nbsp;-&nbsp;<span id="GameBlack"></span>&nbsp;&nbsp;<span id="GameResult"></span></b>

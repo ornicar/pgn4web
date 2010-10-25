@@ -75,13 +75,13 @@ game:<span id=currGm>0</span>/<span id=numGm>0</span>
 
 <td  width=30% style="text-align: left; font-size: 85%">
 
-<span class="label">Event:</span> <span id="GameEvent"></span> 
+<span class="label">Date:</span> <span id="GameDate"></span> 
 <br>
 <span class="label">Site:</span> <span id="GameSite"></span> 
 <p></p>
-<span class="label">Round:</span> <span id="GameRound"></span> 
+<span class="label">Event:</span> <span id="GameEvent"></span> 
 <br>
-<span class="label">Date:</span> <span id="GameDate"></span> 
+<span class="label">Round:</span> <span id="GameRound"></span> 
 <p></p>
 <span class="label">White:</span> <span id="GameWhite"></span> 
 <br>

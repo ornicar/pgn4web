@@ -1,14 +1,14 @@
 10
 
 dir
-4305
+4818
 http://pgn4web.googlecode.com/svn/trunk
 http://pgn4web.googlecode.com/svn
 
 
 
-2010-07-24T17:38:03.786267Z
-4305
+2010-10-25T09:47:13.143888Z
+4818
 paolocasaschi
 
 
@@ -128,6 +128,9 @@ has-props
 
 2926
 
+demo
+dir
+
 bp.png
 file
 
@@ -162,7 +165,7 @@ has-props
 
 1502
 
-demo
+alpha
 dir
 
 bq.png
@@ -199,8 +202,73 @@ has-props
 
 2805
 
-alpha
-dir
+live.css
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+b7fd9e25e37ba4f71b9e18430a4866b9
+2010-09-15T21:05:04.817593Z
+4630
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2456
+
+inputform.html
+file
+
+
+
+
+2010-10-25T12:36:01.623802Z
+595897df89621dbc31800d065b9786ef
+2010-09-01T10:02:17.300420Z
+4540
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5777
 
 br.png
 file
@@ -236,108 +304,6 @@ has-props
 
 1832
 
-inputform.html
-file
-
-
-
-
-2010-07-25T00:09:49.503233Z
-ded66adafdb6e896577ee3f9f1a348ea
-2010-07-24T17:31:00.593853Z
-4304
-paolocasaschi
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6642
-
-live.css
-file
-
-
-
-
-2010-07-25T00:09:49.503233Z
-9cde5428cd03ec5d817a82ce246cd3f8
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2575
-
-collection-example.html
-file
-
-
-
-
-2010-07-25T00:09:49.503233Z
-edc4cc3805e38f394aa92dcec0f542b7
-2010-06-22T20:39:59.342539Z
-4059
-paolocasaschi
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3826
-
 pgn-encoder.php
 file
 
@@ -372,16 +338,16 @@ paolocasaschi@gmail.com
 
 12236
 
-help.html
+collection-example.html
 file
 
 
 
 
-2010-07-25T00:09:49.526925Z
-ad98b56d03379b935203d673cf8f9b96
-2010-07-08T19:01:54.724800Z
-4219
+2010-10-25T12:36:01.633802Z
+650c5d6185605f0b305084ed6f0c49cf
+2010-09-27T20:28:14.853308Z
+4700
 paolocasaschi
 has-props
 
@@ -404,7 +370,75 @@ has-props
 
 
 
-9401
+4227
+
+live-multi.html
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+3d7b70674b465b5601d1ae182e8f9433
+2010-10-21T13:42:17.964106Z
+4806
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7393
+
+help.html
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+24b5941498fd2d1f36e69c8c124888d8
+2010-08-25T17:00:13.267693Z
+4464
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9958
 
 wch08ak.css
 file
@@ -446,10 +480,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-83e8d66212c24de09d6873c5247ca681
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.633802Z
+a11af2d90c2c48fd2b1a49636051be86
+2010-09-02T21:26:04.809174Z
+4559
 paolocasaschi
 has-props
 
@@ -472,7 +506,75 @@ has-props
 
 
 
-5071
+5074
+
+lon09r5.css
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+68bfe61d7981f761539aceb39d26df11
+2010-10-13T11:11:48.577867Z
+4776
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2377
+
+chess960wch06.pgn
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+f9c8b7310a4eedb184f8ba412ffcde83
+2010-09-30T06:59:07.523926Z
+4719
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5387
 
 viewer
 dir
@@ -486,10 +588,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-c8482c0dd71ba3e6fe060422931eeff5
-2010-07-22T12:59:08.243638Z
-4295
+2010-10-25T12:36:01.633802Z
+6a74f55807865593e940153e159fc7ec
+2010-10-19T21:39:30.158876Z
+4802
 paolocasaschi
 has-props
 
@@ -512,7 +614,7 @@ has-props
 
 
 
-1521
+1366
 
 paolo-chess-games.html
 file
@@ -520,10 +622,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-0e5d9cf5dd4b05c75124d1e1afb15e7a
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.633802Z
+b751783d7f74ac562ae077dbaa174ba7
+2010-10-18T10:11:07.914200Z
+4792
 paolocasaschi
 has-props
 
@@ -546,7 +648,41 @@ has-props
 
 
 
-2963
+3206
+
+bare.html
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+8a6a4960863d2b848d88234f001f0c6c
+2010-09-29T19:35:59.956378Z
+4717
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2186
 
 pawn.ico
 file
@@ -582,16 +718,16 @@ has-props
 
 1986
 
-collection.css
+chess960wch06.html
 file
 
 
 
 
-2010-07-25T00:09:49.536926Z
-af1c250d340994f7236fe380ec6ab699
-2010-05-21T21:04:28.059973Z
-3958
+2010-10-25T12:36:01.633802Z
+bdac8f3237778f8837511b74ddcc3e87
+2010-10-21T13:42:17.964106Z
+4806
 paolocasaschi
 has-props
 
@@ -614,7 +750,41 @@ has-props
 
 
 
-1991
+6438
+
+collection.css
+file
+
+
+
+
+2010-10-25T12:36:01.633802Z
+140cd98947eaf8fd3cfacb2a1c80c3ec
+2010-10-01T15:51:53.176755Z
+4752
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2442
 
 tilb98r2.html
 file
@@ -622,10 +792,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-2fe8a19e3490f0af07baee7adc94780f
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.633802Z
+4ae316024796705e3419341e6590dbfb
+2010-09-02T21:26:04.809174Z
+4559
 paolocasaschi
 has-props
 
@@ -648,7 +818,7 @@ has-props
 
 
 
-5533
+5351
 
 blackberry.html
 file
@@ -656,10 +826,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-33e23ab141b5e4ff2b5d164fdee51e82
-2010-06-22T20:39:59.342539Z
-4059
+2010-10-25T12:36:01.633802Z
+a7e53d55725e6f755b94fae99c8cb61f
+2010-09-08T11:27:23.282998Z
+4597
 paolocasaschi
 has-props
 
@@ -682,7 +852,7 @@ has-props
 
 
 
-16597
+16592
 
 pgn-standard-proposed-supplement.txt
 file
@@ -761,10 +931,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-c0e5b7b95ab77d42c8655b98057d6c55
-2010-07-07T21:32:36.014934Z
-4207
+2010-10-25T12:36:01.633802Z
+cf9478a0f452e119416e71c97dde27b5
+2010-10-19T21:46:25.927992Z
+4803
 paolocasaschi
 has-props
 
@@ -787,7 +957,7 @@ has-props
 
 
 
-9374
+10324
 
 pgn4web-server-config.js
 file
@@ -795,11 +965,11 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-445fb8436f5283f305a3cc889d883cc0
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+9e7c7808eb87b72773947f4407d300b2
+2010-10-20T16:54:56.185830Z
+4805
+paolocasaschi
 has-props
 
 
@@ -821,7 +991,7 @@ has-props
 
 
 
-1633
+1827
 
 paolo-chess-games.pgn
 file
@@ -829,10 +999,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-bcc755ae618c385e6500bd97ac9a4fd7
-2010-05-13T13:51:09.988503Z
-3814
+2010-10-25T12:36:01.643802Z
+addfa54ba8705eea60dc355674c79008
+2010-10-18T14:08:24.201570Z
+4797
 paolocasaschi
 has-props
 
@@ -855,7 +1025,7 @@ has-props
 
 
 
-40039
+41679
 
 board.html
 file
@@ -863,10 +1033,10 @@ file
 
 
 
-2010-07-25T00:09:49.536926Z
-811156e5ccf31fe3a72a366adf174f4f
-2010-07-24T17:19:52.362098Z
-4300
+2010-10-25T12:36:01.643802Z
+c81c1e3d391ed0aad55a41b0dbb82111
+2010-10-19T21:46:25.927992Z
+4803
 paolocasaschi
 has-props
 
@@ -889,75 +1059,7 @@ has-props
 
 
 
-44821
-
-board-generator-test.html
-file
-
-
-
-
-2010-07-25T00:09:49.546942Z
-08d5323d04f5734057f96bc1bc3eb9aa
-2010-06-22T20:39:59.342539Z
-4059
-paolocasaschi
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-31102
-
-home.html
-file
-
-
-
-
-2010-07-25T00:09:49.546942Z
-f6ffe5edf6a9f344caa99797d90300cc
-2010-06-22T20:39:59.342539Z
-4059
-paolocasaschi
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-5084
+46158
 
 wb.png
 file
@@ -993,17 +1095,17 @@ has-props
 
 3288
 
-live-template.css
+home.html
 file
 
 
 
 
-2010-07-25T00:09:49.546942Z
-9608be8b71eb0fd3e66aeaff50984fd8
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+291df9fd4581cd6b06bb43241f3e9f66
+2010-10-20T16:54:56.185830Z
+4805
+paolocasaschi
 has-props
 
 
@@ -1025,7 +1127,78 @@ has-props
 
 
 
-1786
+5215
+
+board-generator-test.html
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+7b0b795697f03aca2d24247c028d6808
+2010-10-23T09:58:13.937259Z
+4811
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+32491
+
+live
+dir
+
+mini.html
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+14422c6f17c0471e7eebf4c0e82c3a4d
+2010-09-21T16:14:35.608786Z
+4644
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5966
 
 twic765.css
 file
@@ -1061,16 +1234,16 @@ has-props
 
 1877
 
-mini.html
+live-template.css
 file
 
 
 
 
-2010-07-25T00:09:49.546942Z
-db3071f36d24042be0cd192220affbae
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+f2f0a170e05f6a9b4a1a8dc138eb6ad0
+2010-07-25T10:03:35.659096Z
+4307
 paolocasaschi
 has-props
 
@@ -1093,24 +1266,21 @@ has-props
 
 
 
-5959
-
-live
-dir
+1789
 
 uscf
 dir
 
-live.html
+pgn-decoder.js
 file
 
 
 
 
 2010-07-25T00:09:49.546942Z
-bc5e347adc5a841faadb774899d65516
-2010-06-22T20:39:59.342539Z
-4059
+22440c22c42d490624e0eaf7477a5c9f
+2010-07-19T13:52:09.656517Z
+4290
 paolocasaschi
 has-props
 
@@ -1133,7 +1303,7 @@ has-props
 
 
 
-1874
+10157
 
 tilb98r2.pgn
 file
@@ -1169,16 +1339,16 @@ has-props
 
 14479
 
-pgn-decoder.js
+live.html
 file
 
 
 
 
-2010-07-25T00:09:49.546942Z
-22440c22c42d490624e0eaf7477a5c9f
-2010-07-19T13:52:09.656517Z
-4290
+2010-10-25T12:36:01.643802Z
+cffcf389172e171cdf422a75c8ee3c69
+2010-10-19T21:46:25.927992Z
+4803
 paolocasaschi
 has-props
 
@@ -1201,7 +1371,7 @@ has-props
 
 
 
-10157
+2034
 
 wk.png
 file
@@ -1339,6 +1509,74 @@ has-props
 
 3417
 
+mini-test-span.html
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+2dac275fa264f4687646d8568ac5e145
+2010-09-21T16:14:35.608786Z
+4644
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6126
+
+README.txt
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+536872dd84075f581e82e82937cb23cb
+2010-09-30T07:06:18.211834Z
+4720
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+19075
+
 wr.png
 file
 
@@ -1372,74 +1610,6 @@ has-props
 
 
 2336
-
-README.txt
-file
-
-
-
-
-2010-07-25T00:09:49.546942Z
-d574eee96932e4265e71f29dfe2ab337
-2010-07-24T17:31:00.593853Z
-4304
-paolocasaschi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-17480
-
-mini-test-span.html
-file
-
-
-
-
-2010-07-25T00:09:49.546942Z
-c1a801b6f24ba12b1bd565850a8c69d1
-2010-07-24T17:31:00.593853Z
-4304
-paolocasaschi
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6117
 
 tactics.pgn
 file
@@ -1515,10 +1685,10 @@ file
 
 
 
-2010-07-25T00:09:49.546942Z
-565fdc2896739c6cf027f005a5161e17
-2010-06-28T20:38:17.026197Z
-4164
+2010-10-25T12:36:01.643802Z
+963078fef38c502845089eea55218dff
+2010-10-19T21:46:25.927992Z
+4803
 paolocasaschi
 
 
@@ -1541,7 +1711,7 @@ paolocasaschi
 
 
 
-26342
+29427
 
 wch08ak.pgn
 file
@@ -1549,11 +1719,11 @@ file
 
 
 
-2010-07-25T00:09:49.546942Z
-89b2bf9f665f533f070c9b560a221ac7
-2009-12-05T11:42:22.343518Z
-2468
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+248909770b9ab101ead3219cef289070
+2010-07-25T09:58:28.760423Z
+4306
+paolocasaschi
 has-props
 
 
@@ -1575,10 +1745,44 @@ has-props
 
 
 
-38924
+38963
 
 fonts
 dir
+
+lon09r5.pgn
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+778355242999e7bb96c2971751b8ca6c
+2010-10-01T12:49:31.640623Z
+4739
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3127
 
 release-pgn4web.sh
 file
@@ -1586,10 +1790,10 @@ file
 
 
 
-2010-07-25T00:09:49.546942Z
-7cdae74dc49a1f6de018feb7b9432ab9
-2010-07-09T20:03:28.200474Z
-4250
+2010-10-25T12:36:01.643802Z
+0a1b0560e41e21245ea9817e5b6de4a1
+2010-10-15T16:03:03.801822Z
+4785
 paolocasaschi
 
 
@@ -1612,7 +1816,7 @@ paolocasaschi
 
 
 
-623
+610
 
 collection.html
 file
@@ -1620,10 +1824,10 @@ file
 
 
 
-2010-07-25T00:09:49.546942Z
-1cbf91c4847bd6135b93f7340ee13016
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+0f3414f01ec54b3266b3e79c692c2e93
+2010-09-29T09:16:13.377568Z
+4711
 paolocasaschi
 has-props
 
@@ -1646,7 +1850,7 @@ has-props
 
 
 
-5939
+6423
 
 pgn-standard.txt
 file
@@ -1682,16 +1886,16 @@ has-props
 
 121009
 
-encoder-decoder-test.html
+template.css
 file
 
 
 
 
-2010-07-25T00:09:49.556568Z
-832e9a1ac6ba3f352e5b0ecf82a10ccc
-2010-06-22T20:39:59.342539Z
-4059
+2010-10-25T12:36:01.643802Z
+f2f0a170e05f6a9b4a1a8dc138eb6ad0
+2010-07-25T09:58:28.760423Z
+4306
 paolocasaschi
 has-props
 
@@ -1714,7 +1918,7 @@ has-props
 
 
 
-38453
+1789
 
 live-placeholder.pgn
 file
@@ -1750,17 +1954,17 @@ has-props
 
 485
 
-template.css
+encoder-decoder-test.html
 file
 
 
 
 
 2010-07-25T00:09:49.556568Z
-9608be8b71eb0fd3e66aeaff50984fd8
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+832e9a1ac6ba3f352e5b0ecf82a10ccc
+2010-06-22T20:39:59.342539Z
+4059
+paolocasaschi
 has-props
 
 
@@ -1782,7 +1986,41 @@ has-props
 
 
 
-1786
+38453
+
+chess960wch06.css
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+99d8241948f9a6dcd6e63c4562941f71
+2010-09-30T06:59:07.523926Z
+4719
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1774
 
 blackberry.css
 file
@@ -1790,11 +2028,11 @@ file
 
 
 
-2010-07-25T00:09:49.556568Z
-07841fa5329bb3cf647c147cc249b9c0
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+6c0fa02d69b76899b147368158a2f884
+2010-09-08T13:31:17.986489Z
+4598
+paolocasaschi
 has-props
 
 
@@ -1816,7 +2054,7 @@ has-props
 
 
 
-1677
+1596
 
 clear.png
 file
@@ -1858,11 +2096,11 @@ file
 
 
 
-2010-07-25T00:09:49.556568Z
-90e51472add70fdf2945d56bb494f2c1
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+1f43b6c637bdea4fe0f230b1c0c136cd
+2010-09-09T14:28:33.576333Z
+4599
+paolocasaschi
 has-props
 
 
@@ -1884,10 +2122,44 @@ has-props
 
 
 
-1666
+2166
 
 jscolor
 dir
+
+lon09r5.html
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+58575eb3d79047f5517363be60c235a8
+2010-10-01T14:31:44.467628Z
+4741
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5187
 
 pgn-encoder.js
 file
@@ -1963,10 +2235,10 @@ file
 
 
 
-2010-07-25T00:09:49.556568Z
-6ed50e3af8991387e66845ef95f8afa2
-2010-07-24T17:38:03.786267Z
-4305
+2010-10-25T12:36:01.643802Z
+057a1173b84e1f9b173884d4857a2e52
+2010-10-18T19:41:15.987869Z
+4798
 paolocasaschi
 has-props
 
@@ -1989,7 +2261,7 @@ has-props
 
 
 
-129319
+125139
 
 mini.css
 file
@@ -1997,44 +2269,10 @@ file
 
 
 
-2010-07-25T00:09:49.556568Z
-115f40f086447fcb3dc5e53c597bb340
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1493
-
-live-compact.html
-file
-
-
-
-
-2010-07-25T00:09:49.556568Z
-cc77cdbe46dca593e0d340f9becb1124
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+f13b41109f300880c5d14db7a11771b6
+2010-10-01T15:45:36.833458Z
+4751
 paolocasaschi
 has-props
 
@@ -2057,7 +2295,41 @@ has-props
 
 
 
-15558
+1614
+
+live-compact.html
+file
+
+
+
+
+2010-10-25T12:36:01.643802Z
+dc9731233797ee5f4e29baa05ee5705c
+2010-09-15T21:05:04.817593Z
+4630
+paolocasaschi
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+15244
 
 twic765.pgn
 file
@@ -2133,11 +2405,11 @@ file
 
 
 
-2010-07-25T00:09:49.556568Z
-909d4aeef238dd3946df3cd30e985eb3
-2010-01-25T14:18:17.394746Z
-2838
-paolocasaschi@gmail.com
+2010-10-25T12:36:01.643802Z
+8199cae69e0a9ffc07e13be51f9ebf05
+2010-10-18T10:11:07.914200Z
+4792
+paolocasaschi
 has-props
 
 
@@ -2159,7 +2431,7 @@ has-props
 
 
 
-1702
+2074
 
 bb.png
 file
@@ -2269,10 +2541,10 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-2a14029ec2f52e3c383806fd1578e0d2
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+6638dc9a6957b81c307527a8becba959
+2010-10-02T09:52:25.110872Z
+4755
 paolocasaschi
 has-props
 
@@ -2295,7 +2567,7 @@ has-props
 
 
 
-3307
+3385
 
 index.html
 file
@@ -2303,12 +2575,12 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-68b329da9893e34099c7d8ad5cb9c940
-2010-06-21T10:43:30.524784Z
-4056
-paolocasaschi
 
+68b329da9893e34099c7d8ad5cb9c940
+2010-09-29T19:40:41.015940Z
+4718
+paolocasaschi
+has-props
 
 
 
@@ -2340,10 +2612,10 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-abc63020a3da113452a3d7323a073189
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+2a5264f144e10c48d0cf0089a33627bf
+2010-09-29T09:20:03.001977Z
+4712
 paolocasaschi
 has-props
 
@@ -2408,10 +2680,10 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-289b255274329cf2adbbce785ff64ab9
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+a06b4eabd91f9a3eba9e8da220e2be71
+2010-08-13T22:30:42.101272Z
+4392
 paolocasaschi
 has-props
 
@@ -2434,7 +2706,7 @@ has-props
 
 
 
-4074
+4395
 
 live-no-event.pgn
 file
@@ -2510,10 +2782,10 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-d8eb6e1150512af91479224302b3f42d
-2010-07-07T16:11:35.751768Z
-4202
+2010-10-25T12:36:01.643802Z
+6e33818438e5f009959370917569c466
+2010-10-25T09:47:13.143888Z
+4818
 paolocasaschi
 has-props
 
@@ -2536,7 +2808,7 @@ has-props
 
 
 
-81527
+88580
 
 template.html
 file
@@ -2544,10 +2816,10 @@ file
 
 
 
-2010-07-25T00:09:49.564384Z
-23a5f1ef18e0e680998bfdcc1b8a1402
-2010-07-24T17:31:00.593853Z
-4304
+2010-10-25T12:36:01.643802Z
+1b99825a671af00c21540402d1af118f
+2010-07-25T11:06:18.654859Z
+4308
 paolocasaschi
 has-props
 
@@ -2570,5 +2842,5 @@ has-props
 
 
 
-3435
+3454
 

@@ -22,22 +22,27 @@ then
   echo "  refreshSeconds: refresh rate in seconds (default: $refreshSeconds_default)"
   echo "  timeoutHours: timeout in hours for stopping the process (default: $timeoutHours_default)"
   echo
-  echo "Needs to be run using bash and requires either curl or wget"
+  echo "Needs to be run using bash and requires curl"
   echo "Logs to 'localPgnFile'.log"
   echo
   exit
 fi
 
-if [ "$(basename $SHELL)" != "bash" ]
+if [ "$1" == "--no-shell-check" ]
 then
-	echo "ERROR: $(basename $0) should be run with bash"
-	exit
+	shift 1
+else
+	if [ "$(basename $SHELL)" != "bash" ]
+	then
+		echo "ERROR: $(basename $0) should be run with bash. Prepend --no-shell-check as first parameters to skip checking the shell type."
+		exit
+	fi
 fi
 
 print_log() {
 	if [ -n "$1" ]
 	then
-		log="$(date) $(basename $0) ($$) LOG: $1"
+		log="$(date '+%b %d %T') $(hostname) $(basename $0) [$$]: $1"
 	else
 		log=""
 	fi
@@ -62,6 +67,13 @@ print_error() {
 	fi
 	echo $(basename $0) ERROR: $1 > /dev/stderr
 }
+
+umask 0000
+if [ $? -ne 0]
+then
+	print_error "failed setting umask 0000"
+        exit
+fi 
 
 if [ -z "$1" ]
 then 
@@ -102,7 +114,7 @@ then
 	print_error "localPgnFile should not contain \"]\""
 	exit
 fi
-tmpLocalPgnFile=$localPgnFile.$RANDOM.pgn
+tmpLocalPgnFile=$localPgnFile.tmp
 
 logFile=$localPgnFile.log
 if [ -e "$logFile" ] || [ -h "$logFile" ]
@@ -111,9 +123,7 @@ then
 	print_error "delete the file or choose another localPgnFile name and restart"
 	exit
 fi
-print_log
-print_log "pgn4web $(basename $0) logfile"
-print_log
+print_log "start"
 
 if [ -z "$3" ]
 then
@@ -132,35 +142,32 @@ timeoutSteps=$((3600*$timeoutHours/$refreshSeconds))
 
 if [ -z "$(which curl)" ]
 then
-	if [ -z "$(which wget)" ]
-	then
-		print_error "missing both curl and wget"
-		exit
-	else
-		grabCmdLine="wget -qrO $tmpLocalPgnFile $remotePgnUrl"
-	fi
+	print_error "missing curl"
+	exit
 else 
-	grabCmdLine="curl -so $tmpLocalPgnFile --url $remotePgnUrl"
+	grabCmdLine="curl --silent --remote-time --time-cond $tmpLocalPgnFile --output $tmpLocalPgnFile --url $remotePgnUrl"
 fi
+	# wget alternative to curl, but --timestamp option is not compatible with --output-document
+	# grabCmdLine="wget --quiet --output-document=$tmpLocalPgnFile $remotePgnUrl"
 
 print_log "remoteUrl: $remotePgnUrl"
 print_log "localPgnFile: $localPgnFile"
 print_log "refreshSeconds: $refreshSeconds"
 print_log "timeoutHours: $timeoutHours"
-print_log 
 
 step=0
 while [ $step -le $timeoutSteps ] 
 do
-	print_log "step $step of $timeoutSteps"
-	$grabCmdLine 
-	if [ -e "$tmpLocalPgnFile" ]
+	$grabCmdLine
+	cmp -s "$tmpLocalPgnFile" "$localPgnFile"
+	if [ $? -ne 0 ]
 	then
-		mv "$tmpLocalPgnFile" "$localPgnFile"
+		cp "$tmpLocalPgnFile" "$localPgnFile"
+		print_log "step $step of $timeoutSteps, new PGN data found"
+	else
+		print_log "step $step of $timeoutSteps, no new data"
 	fi
 	step=$(($step +1))
 	sleep $refreshSeconds
 done
-
-print_log "done"
 

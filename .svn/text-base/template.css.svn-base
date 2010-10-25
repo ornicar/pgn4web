@@ -94,8 +94,9 @@ body {
 }
 
 .label,
-.comment,
-.nag {
+.comment {
   color: gray;
 }
 
+.nag {
+}

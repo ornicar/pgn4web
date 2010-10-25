@@ -21,6 +21,9 @@ body {
   border-style: double; 
   border-color: black;
   border-width: 3px;
+  box-shadow: 0px 0px 15px #AAAAAA;
+  -webkit-box-shadow: 0px 0px 15px #AAAAAA;
+  -moz-box-shadow: 0px 0px 15px #AAAAAA;
 }
 
 .pieceImage {

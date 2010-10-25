@@ -8,7 +8,7 @@
 html, 
 body { 
   margin: 0; 
-  padding: 0; 
+  padding: 0;
 }
 
 body {
@@ -17,57 +17,77 @@ body {
   background: white;
 }
 
-.boardTable {
-  border-style: double; 
-  border-color: #e1dbb5;
-  border-width: 3px;
-}
-
 .pieceImage {
-  width: 24;
-  height: 24;
+  width: 26px;
+  height: 26px;
 }
 
 .whiteSquare,
 .blackSquare,
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  width: 28;
-  height: 28;
+  width: 34px;
+  height: 34px;
+  border-width: 1px;
+}
+
+.whiteSquare,
+.blackSquare, 
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  border-style: solid;
 }
 
 .whiteSquare,
 .highlightWhiteSquare {
-  background: #faf4dc;
+  background: #E8E8E8;
 }
 
 .blackSquare,
 .highlightBlackSquare {
-  background: #e1dbb5;
+  background: #C2C9D1;
+}
+
+.whiteSquare {
+  border-color: #E8E8E8;
+}
+
+.blackSquare {
+  border-color: #C2C9D1;
 }
 
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  background: #fdf88d;
+  border-color: #A8A8A8;
 }
 
+.pgnSubmit,
 .selectControl,
-.actionButton,
 .buttonControlPlay,
 .buttonControlStop,
-.buttonControl,
-.searchPgnButton,
-.searchPgnExpression {
+.buttonControl {
 /* a "width" attribute here must use the !important flag to override default settings */
-  color: gray;
-  background-color: #faf4dc;
-  border-color: #e1dbb5;
-  border-style: solid;
-  border-width: 1px;
+  color: #A8A8A8;
+  font-weight: bold;
+  font-size: 16px;
+  border-style: none;
+  background-color: #E8E8E8;
+  padding: 5px;
+}
+
+.pgnSubmit {
+  text-decoration: none;
+  padding: 2px;
+}
+
+.selectControl {
+/* a "width" attribute here must use the !important flag to override default settings */
+  width: 100% !important;
 }
 
 .buttonControlSpace {
 /* a "width" attribute here must use the !important flag to override default settings */
+  background-color: #E8E8E8;
 }
 
 .searchPgnButton {
@@ -79,18 +99,32 @@ body {
 }
 
 .move,
+.moveOn,
+.comment,
+.nag {
+  font-size: 14px;
+}
+
+.move,
 .moveOn {
   color: black;
-  font-weight: normal;
-  text-decoration: none;   
 }
 
 .moveOn {
-  background: #DAF4D7;
+  background: #C2C9D1;
 }
 
 .comment,
 .nag {
   color: gray;
+}
+
+.pgnheader {
+  color: #A8A8A8; 
+  padding-left: 30px;
+  line-height: 27px;
+  font-size: 18px; 
+  font-weight: bold;
+  white-space: nowrap;
 }
 

@@ -13,6 +13,10 @@ $tmpDir = "viewer";
 $fileUploadLimitBytes = 4194304;
 $fileUploadLimitText = round(($fileUploadLimitBytes / 1048576), 0) . "MB";
 
+$zipSupported = function_exists('zip_open');
+if ($zipSupported) { $pgnDebugInfo = ""; }
+else { $pgnDebugInfo = $pgnDebugInfo . "ZIP support unavailable from server, missing php ZIP library<br/>"; }
+
 $debugHelpText = "a flashing chessboard signals errors in the PGN data, click on the top left chessboard square for debug messages";
 
 if (!($goToView = get_pgn())) { $pgnText = $krabbeStartPosition = get_krabbe_position(); }
@@ -26,7 +30,7 @@ print_footer();
 function set_mode() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
   $mode = $_REQUEST["mode"];
 
@@ -71,9 +75,9 @@ function get_krabbe_position() {
 function get_pgn() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
-  $pgnDebugInfo = $_REQUEST["debug"];
+  $pgnDebugInfo = $pgnDebugInfo . $_REQUEST["debug"];
 
   $pgnText = $_REQUEST["pgnText"];
   if (!$pgnText) { $pgnText = $_REQUEST["pgnTextbox"]; }
@@ -101,19 +105,24 @@ function get_pgn() {
     $isPgn = preg_match("/\.(pgn|txt)$/i",$pgnUrl);
     $isZip = preg_match("/\.zip$/i",$pgnUrl);
     if ($isZip) {
-      $zipFileString = "<a href='" . $pgnUrl . "'>zip URL</a>";
-      $tempZipName = tempnam($tmpDir, "pgn4webViewer");
-      $pgnUrlHandle = fopen($pgnUrl, "rb");
-      $tempZipHandle = fopen($tempZipName, "wb");
-      $copiedBytes = stream_copy_to_stream($pgnUrlHandle, $tempZipHandle, $fileUploadLimitBytes + 1, 0);
-      fclose($pgnUrlHandle);
-      fclose($tempZipHandle);
-      if (($copiedBytes > 0) & ($copiedBytes <= $fileUploadLimitBytes)) {
-        $pgnSource = $tempZipName;
-      } else {
-	$pgnStatus = "failed to get " . $zipFileString . ": file not found, file exceeds " . $fileUploadLimitText . " size limit or server error";
-        if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
+      if (!$zipSupported) {
+        $pgnStatus = "unable to open zipfile&nbsp; &nbsp;<span style='color: gray;'>please <a style='color: gray;' href='" . $pgnUrl. "'>download zipfile locally</a> and submit extracted PGN</span>";
         return FALSE;
+      } else {
+        $zipFileString = "<a href='" . $pgnUrl . "'>zip URL</a>";
+        $tempZipName = tempnam($tmpDir, "pgn4webViewer");
+        $pgnUrlHandle = fopen($pgnUrl, "rb");
+        $tempZipHandle = fopen($tempZipName, "wb");
+        $copiedBytes = stream_copy_to_stream($pgnUrlHandle, $tempZipHandle, $fileUploadLimitBytes + 1, 0);
+        fclose($pgnUrlHandle);
+        fclose($tempZipHandle);
+        if (($copiedBytes > 0) & ($copiedBytes <= $fileUploadLimitBytes)) {
+          $pgnSource = $tempZipName;
+        } else {
+          $pgnStatus = "failed to get " . $zipFileString . ": file not found, file exceeds " . $fileUploadLimitText . " size limit or server error";
+          if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
+          return FALSE;
+        }
       }
     } else {
       $pgnSource = $pgnUrl;
@@ -148,34 +157,39 @@ function get_pgn() {
   }
 
   if ($isZip) {
-    if ($pgnUrl) { $zipFileString = "<a href='" . $pgnUrl . "'>zip URL</a>"; }
-    else { $zipFileString = "zip file"; }
-    $pgnZip = zip_open($pgnSource);
-    if (is_resource($pgnZip)) {
-      while (is_resource($zipEntry = zip_read($pgnZip))) {
-	if (zip_entry_open($pgnZip, $zipEntry)) {
-	  if (preg_match("/\.pgn$/i",zip_entry_name($zipEntry))) {
-	    $pgnText = $pgnText . zip_entry_read($zipEntry, zip_entry_filesize($zipEntry)) . "\n\n\n";
+    if ($zipSupported) {
+      if ($pgnUrl) { $zipFileString = "<a href='" . $pgnUrl . "'>zip URL</a>"; }
+      else { $zipFileString = "zip file"; }
+      $pgnZip = zip_open($pgnSource);
+      if (is_resource($pgnZip)) {
+        while (is_resource($zipEntry = zip_read($pgnZip))) {
+          if (zip_entry_open($pgnZip, $zipEntry)) {
+            if (preg_match("/\.pgn$/i",zip_entry_name($zipEntry))) {
+              $pgnText = $pgnText . zip_entry_read($zipEntry, zip_entry_filesize($zipEntry)) . "\n\n\n";
+            }
+            zip_entry_close($zipEntry);
+          } else {
+            $pgnStatus = "failed reading " . $zipFileString . " content";
+            zip_close($pgnZip);
+            if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
+            return FALSE;
           }
-          zip_entry_close($zipEntry);
-	} else {
-          $pgnStatus = "failed reading " . $zipFileString . " content";
-          zip_close($pgnZip);
-          if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
-          return FALSE;
         }
-      }
-      zip_close($pgnZip);
-      if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
-      if (!$pgnText) {
-        $pgnStatus = "PGN games not found in " . $zipFileString;
-        return FALSE;
+        zip_close($pgnZip);
+        if (($tempZipName) & (file_exists($tempZipName))) { unlink($tempZipName); }
+        if (!$pgnText) {
+          $pgnStatus = "PGN games not found in " . $zipFileString;
+         return FALSE;
+        } else {
+          return TRUE;
+        }
       } else {
-        return TRUE;
+        $pgnStatus = "failed opening " . $zipFileString;
+        return FALSE;
       }
     } else {
-      $pgnStatus = "failed opening " . $zipFileString;
-      return FALSE;
+      $pgnStatus = "ZIP support unavailable from this server&nbsp; &nbsp;<span style='color: gray;'>only PGN files are supported</span>";
+      return FALSE;         
     }
   }
 
@@ -195,7 +209,11 @@ function get_pgn() {
   } 
 
   if($pgnSource) {
-    $pgnStatus = "only PGN and ZIP (zipped pgn) files are supported";
+    if ($zipSupported) {
+      $pgnStatus = "only PGN and ZIP (zipped pgn) files are supported";
+    } else {
+      $pgnStatus = "only PGN files are supported&nbsp; &nbsp;<span style='color: gray;'>ZIP support unavailable from this server</span>";
+    }
     return FALSE;
   }
 
@@ -205,7 +223,7 @@ function get_pgn() {
 function check_tmpDir() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
   $tmpDirHandle = opendir($tmpDir);
   while($entryName = readdir($tmpDirHandle)) {
@@ -218,7 +236,7 @@ function check_tmpDir() {
   closedir($tmpDirHandle);
 
   if ($unexpectedFiles) {
-    $pgnDebugInfo = $pgnDebugInfo . "message for sysadmin: clean temporary directory " . $tmpDir . ":" . $unexpectedFiles; 
+    $pgnDebugInfo = $pgnDebugInfo . "clean temporary directory " . $tmpDir . "(" . $unexpectedFiles . ")<br>"; 
   }
 }
 
@@ -256,6 +274,12 @@ a:link, a:visited, a:hover, a:active {
 
 </style>
 
+
+<!-- start of google analytics code -->
+
+<!-- end of google analytics code -->
+
+
 </head>
 
 <body>
@@ -278,7 +302,7 @@ END;
 function print_form() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
   $thisScript = $_SERVER['SCRIPT_NAME'];
 
@@ -295,22 +319,50 @@ function print_form() {
   function checkPgnUrl() {
     theObject = document.getElementById("urlFormText");
     if (theObject === null) { return false; }
-    if (!theObject.value.match(/\\.(zip|pgn|txt)\$/i)) {
-      alert("only PGN and ZIP (zipped pgn) files are supported");
-      return false;
-    }
-    return (theObject.value !== "");
+    if (!checkPgnExtension(theObject.value)) { return false; }
+    else { return (theObject.value !== ""); }
   }
 
   function checkPgnFile() {
     theObject = document.getElementById("uploadFormFile");
     if (theObject === null) { return false; }
-    if (!theObject.value.match(/\\.(zip|pgn|txt)\$/i)) {
-      alert("only PGN and ZIP (zipped pgn) files are supported");
-      return false;
-    }
-    return (theObject.value !== "");
+    if (!checkPgnExtension(theObject.value)) { return false; }
+    else { return (theObject.value !== ""); }
   }
+
+END;
+
+  if ($zipSupported) { print <<<END
+
+  function checkPgnExtension(uri) {
+    if (uri.match(/\\.(zip|pgn|txt)\$/i)) {
+      return true; 
+    } else if (uri !== "") {
+      alert("only PGN and ZIP (zipped pgn) files are supported");
+    }
+    return false;
+  }
+
+END;
+
+  } else { print <<<END
+
+  function checkPgnExtension(uri) {
+    if (uri.match(/\\.(pgn|txt)\$/i)) {
+      return true; 
+    } else if (uri.match(/\\.zip\$/i)) {
+      alert("ZIP support unavailable from this server, only PGN files are supported");
+    } else if (uri !== "") { 
+      alert("only PGN files are supported (ZIP support unavailable from this server)");
+    }
+    return false;
+  }
+
+END;
+
+  }
+
+  print <<<END
 
   function checkPgnFormTextSize() {
     document.getElementById("pgnFormButton").title = "PGN textbox size is " + document.getElementById("pgnFormText").value.length;
@@ -463,14 +515,14 @@ END;
 function print_chessboard() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
   if ($mode == "compact") {
-    $squareSize = 30;
-    $pieceSize = 26;
+    $pieceSize = 30;
+    $pieceType = "alpha";
   } else {
-    $squareSize = 42;
     $pieceSize = 38;
+    $pieceType = "merida";
   }
 
   print <<<END
@@ -483,13 +535,18 @@ function print_chessboard() {
 </div>
 </tr></table>
 
-<link href="$toolRoot/fonts/pgn4web-fonts.css" type="text/css" rel="stylesheet" />
+<link href="fonts/pgn4web-fonts.css" type="text/css" rel="stylesheet" />
 <style type="text/css">
 
+END;
+
+  if ($mode == "compact") {
+
+    print <<<END
+
 .boardTable {
-  border-style: double;
-  border-color: #a0a0a0;
-  border-width: 3;
+  border-style: solid;
+  border-width: 0;
 }
 
 .pieceImage {
@@ -501,29 +558,84 @@ function print_chessboard() {
 .blackSquare,
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  width: $squareSize;
-  height: $squareSize;
+  width: $pieceSize;
+  height: $pieceSize;
+  border-width: 0;
+}
+
+.whiteSquare {
+  background: #ede8d5;
+}
+
+.blackSquare {
+  background: #cfcbb3;
+}
+
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  background: #f5d0a9;
+}
+
+.move,
+.label,
+.normalItem,
+.boldItem {
+  font-size: 75%;
+}
+
+END;
+
+  } else {
+
+    print <<<END
+
+.boardTable {
+  border-style: solid;
+  border-color: #663300;
+  border-width: 3;
+  box-shadow: 0px 0px 20px #663300;
+  -webkit-box-shadow: 0px 0px 20px #663300;
+  -moz-box-shadow: 0px 0px 20px #663300;
+}
+
+.pieceImage {
+  width: $pieceSize;
+  height: $pieceSize;
+}
+
+.whiteSquare,
+.blackSquare,
+.highlightWhiteSquare,
+.highlightBlackSquare {
+  width: 42;
+  height: 42;
   border-style: solid;
   border-width: 2;
 }
 
 .whiteSquare,
 .highlightWhiteSquare {
-  border-color: #ede8d5;
-  background: #ede8d5;
+  border-color: #ffcc99;
+  background: #ffcc99;
 }
 
 .blackSquare,
 .highlightBlackSquare {
-  border-color: #cfcbb3;
-  background: #cfcbb3;
+  border-color: #cc9966;
+  background: #cc9966;
 }
 
 .highlightWhiteSquare,
 .highlightBlackSquare {
-  border-color: yellow;
+  border-color: #663300;
   border-style: solid;
 }
+
+END;
+
+  }
+
+  print <<<END
 
 .selectControl {
 /* a "width" attribute here must use the !important flag to override default settings */
@@ -558,7 +670,7 @@ function print_chessboard() {
 }
 
 .moveOn {
-  background: yellow;
+  background: #ffcc99;
 }
 
 .comment {
@@ -569,7 +681,19 @@ function print_chessboard() {
 
 .label {
   color: gray;
-  line-height: 1.3em;
+  padding-right: 10;
+  text-align: right;
+}
+
+.normalItem {
+}
+
+.boldItem {
+  font-weight: bold;
+}
+
+.rowSpace {
+  height: 8px;
 }
 
 </style>
@@ -578,7 +702,7 @@ function print_chessboard() {
 
 <script src="pgn4web.js" type="text/javascript"></script>
 <script type="text/javascript">
-  SetImagePath("merida/$pieceSize"); 
+  SetImagePath("$pieceType/$pieceSize"); 
   SetImageType("png");
   SetHighlightOption(true); 
   SetCommentsIntoMoveText(true);
@@ -640,35 +764,29 @@ END;
     </td>
     <td valign=top align=left width=50%>
 
-      <span class="label">Date:</span> <span id="GameDate"></span> 
-      <br>
-      <span class="label">Site:</span> <span style="white-space: nowrap;" id="GameSite"></span> 
-      <br>
-      <span class="label">Event:</span> <span style="white-space: nowrap;" id="GameEvent"></span> 
-      <br>
-      <span class="label">Round:</span> <span id="GameRound"></span> 
-      <p></p>
-
-      <span class="label">White:</span> <span style="white-space: nowrap;" id="GameWhite"></span> 
-      <br>
-      <span class="label">Black:</span> <span style="white-space: nowrap;" id="GameBlack"></span> 
-      <br>
-      <span class="label">Result:</span> <span id="GameResult"></span> 
-      <p></p>
-
-      <span class="label">game:</span> <span id=currGm>0</span> (<span id=numGm>0</span>)
-      <br>
-      <span class="label">ply:</span> <span id=currPly>0</span> (<span id=numPly>0</span>)
-      <br>
-      <span class="label">Side to move:</span> <span id="GameSideToMove"></span> 
-      <br>
-      <span class="label">Last move:</span> <span class="move"><span id="GameLastMove"></span></span> 
-      <br>
-      <span class="label">Next move:</span> <span class="move"><span id="GameNextMove"></span></span> 
-      <p></p>
-
-      <span class="label">Move comment:</span><br><span id="GameLastComment"></span> 
-      <p></p>
+      <table>
+      <tr><td class="label">date</td><td class="normalItem"><span id="GameDate"></span></td></tr>
+      <tr><td class="label">site</td><td class="normalItem"><span style="white-space: nowrap;" id="GameSite"></span></td></tr>
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td class="label">event</td><td class="normalItem"><span style="white-space: nowrap;" id="GameEvent"></span></td></tr> 
+      <tr><td class="label">round</td><td class="normalItem"><span id="GameRound"></span></td></tr> 
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td class="label">white</td><td class="boldItem"><span style="white-space: nowrap;" id="GameWhite"></span></td></tr>
+      <tr><td class="label">black</td><td class="boldItem"><span style="white-space: nowrap;" id="GameBlack"></span></td></tr>
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td class="label">result</td><td><span class="boldItem" id="GameResult"></span></td></tr>
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td class="label">side</td><td class="normalItem"><span id="GameSideToMove"></span></td></tr>
+      <tr><td class="label">last</td><td><span class="move"><span id="GameLastMove"></span></span></td></tr>
+      <tr><td class="label">next</td><td><span class="move"><span id="GameNextMove"></span></span></td></tr>
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td class="label">ply</td><td class="normalItem"><span id=currPly>0</span> (<span id=numPly>0</span>)</td></tr>
+      <tr><td class="label">game</td><td class="normalItem"><span id=currGm>0</span> (<span id=numGm>0</span>)</td></tr>
+      <!--
+      <tr><td colspan=2 class="rowSpace"></td></tr>
+      <tr><td  class="label">comment</td><td><span class="nromalItem" id="GameLastComment"></span></td></tr>
+      -->
+      </table>
 
     </td>
   </tr>
@@ -696,15 +814,19 @@ END;
 function print_footer() {
 
   global $pgnText, $pgnTextbox, $pgnUrl, $pgnFileName, $pgnFileSize, $pgnStatus, $tmpDir, $debugHelpText, $pgnDebugInfo;
-  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode;
+  global $fileUploadLimitText, $fileUploadLimitBytes, $krabbeStartPosition, $goToView, $mode, $zipSupported;
 
   if ($goToView) { $hashStatement = "window.location.hash = 'view';"; }
   else { $hashStatement = ""; }
+
+  if (($pgnDebugInfo) != "") { $pgnDebugMessage = "message for sysadmin: " . $pgnDebugInfo; }
+  else {$pgnDebugMessage = ""; }
+
   print <<<END
 
 <div>&nbsp;</div>
 <table width=100% cellpadding=0 cellspacing=0 border=0><tr><td valign=bottom align=left>
-<div style="color: gray; margin-top: 1em; margin-bottom: 1em;">$pgnDebugInfo</div>
+<div style="color: gray; margin-top: 1em; margin-bottom: 1em;">$pgnDebugMessage</div>
 </td><td valign=bottom align=right>
 &nbsp;&nbsp;&nbsp;<a href="#moves" style="color: gray; font-size: 66%;">moves</a>&nbsp;&nbsp;&nbsp;<a href="#view" style="color: gray; font-size: 66%;">board</a>&nbsp;&nbsp;&nbsp;<a href="#top" style="color: gray; font-size: 66%;">form</a>
 </tr></table>
@@ -721,12 +843,6 @@ function new_start_pgn4web() {
 window.onload = new_start_pgn4web;
 
 </script>
-
-
-<!-- start of google analytics code -->
-
-<!-- end of google analytics code -->
-
 
 </body>
 

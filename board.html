@@ -82,6 +82,12 @@ body {
 
 <script src="pgn-decoder.js" type="text/javascript"></script>
 
+
+<!-- start of google analytics code -->
+
+<!-- end of google analytics code -->
+
+
 </head>
 
 <body>
@@ -102,9 +108,9 @@ function gup( name ){
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
   var regexS = "[\\?&]"+name+"=([^&#]*)";  
   regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
-  var regex = new RegExp( regexS );
+  var regex = new RegExp( regexS, "i" );
   var results = regex.exec( window.location.href );
-  if( results !== null ) { return results[1]; } 
+  if( results !== null ) { return decodeURIComponent(results[1]); } 
 
   // allows for short version of the URL parameters, for instance sC matches squareColor
   compact_name = name.charAt(0);
@@ -116,10 +122,10 @@ function gup( name ){
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
   regexS = "[\\?&]"+name+"=([^&#]*)";  
   regexS = regexS+"(?!.*"+regexS+")"; // matches the LAST occurrence
-  regex = new RegExp( regexS );
+  regex = new RegExp( regexS, "i" );
 
   results = regex.exec( window.location.href );
-  if( results !== null ) { return results[1]; }
+  if( results !== null ) { return decodeURIComponent(results[1]); }
   
   return "";
 }
@@ -225,6 +231,27 @@ if ((boardBorderColor = gup("boardBorderColorName")) === "") {
   if ((boardBorderColor = "#" + gup("boardBorderColorHex")) == "#") {
     if ((boardBorderColor = "#" + sex2hex(gup("boardBorderColorSex"))) == "#") { boardBorderColor = "#000000"; }
   }
+}
+
+if ((boardShadowColor = gup("boardShadowColorName")) === "") {
+  if ((boardShadowColor = "#" + gup("boardShadowColorHex")) == "#") {
+    boardShadowColorSex = gup("boardShadowColorSex");
+    if ((boardShadowColorSex == "transparent") || (boardShadowColorSex == "t")) {
+      boardShadowColor = "transparent";
+    } else if ((boardShadowColorSex == "border") || (boardShadowColorSex == "b")) {
+      boardShadowColor = "border";
+    } else {
+      if ((boardShadowColor = "#" + sex2hex(gup("boardShadowColorSex"))) == "#") { boardShadowColor = "transparent"; }
+    }
+  }
+}
+if ((boardShadowColor ==  "border") || (boardShadowColor ==  "b") ||
+    (boardShadowColor == "#border") || (boardShadowColor == "#b")) {
+  boardShadowColor = boardBorderColor;
+}
+if ((boardShadowColor ==  "transparent") || (boardShadowColor ==  "t") ||
+    (boardShadowColor == "#transparent") || (boardShadowColor == "#t")) {
+  boardShadowColor = "transparent";
 }
 
 if ((backgroundColor = gup("backgroundColorName")) === "") {
@@ -426,9 +453,6 @@ function cleanPgnInput(pgnInput) {
   pgnInput = pgnInput.replace(/^\s*\[/g,"[");
   pgnInput = pgnInput.replace(/\n[\s*\n]+/g,'\n\n');
 
-  pgnInput = pgnInput.replace(/\u2026/g,'...'); // replace ellipsis char with ...
-  pgnInput = pgnInput.replace(/\u2011/g,'-'); // replace non breaking hyphen with -
-
   return pgnInput;
 }
 
@@ -452,14 +476,10 @@ if ((newPgnId = gup("pgnId")) !== "") {
 }
 
 if ((fenString = gup("fenString")) !== "") {
-  // remove URL escape chars such as %20 replaced by space
-  fenString = decodeURIComponent(fenString);
   document.getElementById('pgnText').value = '[FEN "' + fenString + '"]';
 }
 
 if ((newPgnText = gup("pgnText")) !== "") {
-  // remove URL escape chars such as %20 replaced by space
-  newPgnText = decodeURIComponent(newPgnText);
   document.getElementById('pgnText').value = newPgnText = cleanPgnInput(newPgnText);
 } 
 
@@ -608,8 +628,8 @@ if (gup("help") !== "") {
   document.write(" - refreshMinutes = live broadcast delay (default 0 = live broadcast disabled)\n");
   document.write(" - refreshDemo = if set true sets live demo mode (default false)\n");
   document.write("\n");
-  document.write(" - initialGame = first | last | random | a number (default first)\n");
-  document.write(" - initialHalfmove = start | end | random | comment | a number | a search expression (default start)\n");
+  document.write(" - initialGame = first | last | random | a number | a search expression (default first)\n");
+  document.write(" - initialHalfmove = start | end | random | comment | a number (default start)\n");
   document.write("\n");
   document.write(" - autoplayMode = game (autoplay first game once) | loop (loops through games continiously) | none (default game)\n");
   document.write(" - delay = autoplay delay in ms (default 1000)\n");
@@ -622,6 +642,7 @@ if (gup("help") !== "") {
   document.write(" - darkColorHex = dark square color hex code, like FF0000 (default C6CEC3)\n");
   document.write(" - highlightColorHex = highlight color hex code, like FF0000 (default DAF4D7)\n");
   document.write(" - boardBorderColorHex = board border color hex code, like FF0000 (default 000000)\n");
+  document.write(" - boardShadowColorHex = board shadow color hex code, like FF0000, 'transparent' for no shadow, 'border' for same color as board border (default transparent)\n");
   document.write("\n");
   document.write(" - buttonsDisplay = hidden | standard (use browser's standard buttons) | custom (use custom color buttons) (default hidden)\n");
   document.write(" - controlBackgroundColorHex = control buttons background color hex code, like FF0000 (default reverts to standard buttons)\n");
@@ -737,6 +758,14 @@ if (highlightMode == 'border') {
 
   newStyleSheet += '.boardTable { border-color: ' + boardBorderColor + '; } \n'; 
   
+  if (boardShadowColor != 'transparent') {
+    newStyleSheet += '.boardTable { ' +   
+      'box-shadow: 0px 0px ' + Math.ceil(squareSize / 2) + 'px ' + boardShadowColor + '; ' +
+      '-webkit-box-shadow: 0px 0px ' + Math.ceil(squareSize / 2) + 'px ' + boardShadowColor + '; ' +
+      '-moz-box-shadow: 0px 0px ' + Math.ceil(squareSize / 2) + 'px ' + boardShadowColor + '; ' +
+      '} \n';
+  }
+
   if (!fontMovesSize.match(/[^0-9]/)) { fontMovesSize += 'px'; }
   newStyleSheet += '.move { color: ' + fontMovesColor + '; font-size: ' + fontMovesSize + '; } \n';
   
@@ -901,11 +930,10 @@ function customFunctionOnPgnTextLoad() {
   paddingControlHeight = Math.floor(squareSize / 2.5);
   if ((paddingControlWidth = squareSize - textMargin) < 0) { paddingControlWidth = 0; }
 
-  theObject = document.getElementById("GameButtons");
-  if (theObject) { theObject.style.paddingTop = paddingControlHeight; }
+  if (theObject = document.getElementById("GameButtons"))
+  { theObject.style.paddingTop = paddingControlHeight; }
 
-  theObject = document.getElementById("GameSelector");
-  if (theObject) { 
+  if (theObject = document.getElementById("GameSelector")) { 
     if ((buttonsDisplay != "hidden") && (numberOfGames > 1)) { 
       theObject.style.paddingBottom = paddingControlHeight; 
       theObject.style.display = "block";
@@ -915,8 +943,7 @@ function customFunctionOnPgnTextLoad() {
     }
   }
 
-  theObject = document.getElementById("headerMovesPadding");
-  if (theObject) { 
+  if (theObject = document.getElementById("headerMovesPadding")) { 
     if (horizontalLayout === true) { theObject.width = paddingControlWidth + 'px'; }
     else { theObject.style.minHeight = paddingControlHeight; }
   }
@@ -925,13 +952,11 @@ function customFunctionOnPgnTextLoad() {
   document.getElementById("boardTable").style.width = boardHeight;
   boardWidth = document.getElementById("boardTable").offsetWidth;
 
-  theObject = document.getElementById("GameButtons");
-  if (theObject) {
+  if (theObject = document.getElementById("GameButtons")) {
     if (buttonsDisplay != "hidden") { boardHeight += document.getElementById("GameButtons").offsetHeight; }
   }
 
-  theObject = document.getElementById("GameSelector");
-  if (theObject) {
+  if (theObject = document.getElementById("GameSelector")) {
     if ((buttonsDisplay != "hidden") && (numberOfGames > 1)) { boardHeight += document.getElementById("GameSelector").offsetHeight; }
   }
 
@@ -942,8 +967,7 @@ function customFunctionOnPgnTextLoad() {
   if (fixFrameWidthToBoard) { frameWidth = boardWidth + 2 * framePadding; }
   if (fixFrameHeightToBoard) { frameHeight = boardHeight + 2 * framePadding; }
 
-  theObject = document.getElementById("headerMoves");
-  if (theObject !== null) {
+  if (theObject = document.getElementById("headerMoves")) {
     if (horizontalLayout === true) {
       if (frameWidth === "") { theObject.style.width = textWidth; }
       else { document.getElementById("outerFrame").style.width = frameWidth - 2 * framePadding; }
@@ -958,6 +982,15 @@ function customFunctionOnPgnTextLoad() {
     }
   }
 
+  // cope with occasional failures to load the live PGN data
+  if ((LiveBroadcastDelay !== 0) && (LiveBroadcastTicker > 0) && (!LiveBroadcastFoundOldGame)) {
+    SetInitialGame(init_Game);
+    SetInitialHalfmove(init_Halfmove,always_Halfmove);
+    setCurrentGameFromInitialGame();
+    Init();
+    GoToInitialHalfmove();
+  }
+
   if (gup("showHeightWidth") !== "") { 
     myAlert("info: board width=" + boardWidth + " height=" + boardHeight, false);
   }
@@ -965,8 +998,7 @@ function customFunctionOnPgnTextLoad() {
 
 function customFunctionOnPgnGameLoad() {
 
-  theObject = document.getElementById("roundDetails");
-  if (theObject) {
+  if (theObject = document.getElementById("roundDetails")) {
     if ((gameRound[currentGame] !=  undefined) &&
         (gameRound[currentGame] !== "") &&
         (gameRound[currentGame] !== "*") &&
@@ -977,8 +1009,7 @@ function customFunctionOnPgnGameLoad() {
     }
   }
 
-  theObject = document.getElementById("siteDateSpacer");
-  if (theObject) {
+  if (theObject = document.getElementById("siteDateSpacer")) {
     if ((gameSite[currentGame] != undefined) &&
         (gameSite[currentGame] !== "") &&
         (gameDate[currentGame] != undefined) &&
@@ -989,8 +1020,7 @@ function customFunctionOnPgnGameLoad() {
     }
   }
 
-  theObject = document.getElementById("whiteBlackSpacer");
-  if (theObject) {
+  if (theObject = document.getElementById("whiteBlackSpacer")) {
     if ((gameWhite[currentGame] != undefined) &&
         (gameWhite[currentGame] !== "") &&
         (gameBlack[currentGame] != undefined) &&
@@ -1001,8 +1031,7 @@ function customFunctionOnPgnGameLoad() {
     }
   }
 
-  theObject = document.getElementById("blackResultSpacer");
-  if (theObject) {
+  if (theObject = document.getElementById("blackResultSpacer")) {
     if ((gameBlack[currentGame] != undefined) &&
         (gameBlack[currentGame] !== "") &&
         (gameResult[currentGame] != undefined) &&
@@ -1013,8 +1042,7 @@ function customFunctionOnPgnGameLoad() {
     }
   }
 
-  theObject = document.getElementById("playersDetails");
-  if (theObject) {
+  if (theObject = document.getElementById("playersDetails")) {
     if ( ( ((gameWhite[currentGame] != undefined) && (gameWhite[currentGame] !== ""))   ||
            ((gameBlack[currentGame] != undefined) && (gameBlack[currentGame] !== ""))   ||
            ((gameResult[currentGame] != undefined) && (gameResult[currentGame] !== "")) )  && 
@@ -1029,8 +1057,7 @@ function customFunctionOnPgnGameLoad() {
     }
   }
 
-  theObject = document.getElementById("headerMovesSpacer");
-  if (theObject) {
+  if (theObject = document.getElementById("headerMovesSpacer")) {
     if ( ((gameWhite[currentGame] != undefined) && (gameWhite[currentGame] !== ""))   ||
          ((gameBlack[currentGame] != undefined) && (gameBlack[currentGame] !== ""))   ||
          ((gameResult[currentGame] != undefined) && (gameResult[currentGame] !== "")) || 
@@ -1047,8 +1074,7 @@ function customFunctionOnPgnGameLoad() {
 
 // uncomment this to show the result at the end of the moves text
 //
-// theObject = document.getElementById("GameText");
-//   if (theObject) {
+//   if (theObject = document.getElementById("GameText")) {
 //     if ( (gameResult[currentGame] == "1-0")     || 
 //          (gameResult[currentGame] == "0-1")     ||
 //          (gameResult[currentGame] == "1/2-1/2") ||
@@ -1069,12 +1095,6 @@ function customShortcutKey_Shift_1() {
 }
 
 </script>
-
-
-<!-- start of google analytics code -->
-
-<!-- end of google analytics code -->
-
 
 </body>
 

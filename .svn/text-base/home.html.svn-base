@@ -23,8 +23,11 @@ body
 a:link, a:visited, a:hover, a:active
 { color: black; text-decoration: none; }
 
-.menu_heading 
+.menu_heading, .iframe_area 
 {font-weight: normal; margin-left: 0; margin-right: 40px; margin-top: 3em; margin-bottom: 0;}
+
+.iframe_area
+{box-shadow: 0px 0px 20px #663300; -webkit-box-shadow: 0px 0px 20px #663300; -moz-box-shadow: 0px 0px 20px #663300; border-style: solid; border-color: #EDE8D5; border-width: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}
 
 .menu_item
 {font-weight: bold; margin-left: 20px; margin-right: 40px; margin-top: 0.66em; margin-bottom: 0;}
@@ -36,7 +39,15 @@ a:link, a:visited, a:hover, a:active
 
 <link rel="shortcut icon" href="pawn.ico" />
 
-</head><body>
+
+<!-- start of google analytics code -->
+
+<!-- end of google analytics code -->
+
+
+</head>
+
+<body>
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
 <td align="left" valign="middle"> 
@@ -47,19 +58,19 @@ a:link, a:visited, a:hover, a:active
 </td>
 </tr></tbody></table>
 
-<div class="banner">javascript tool showing chess PGN games in websites and blogs</div>
+<div class="banner">javascript chessboard showing chess games on websites and blogs</div>
 
 <table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
 <td align="left" valign="top">
 <div class="menu_heading">online&nbsp;services</div>
 <div class="menu_item"><a href=board-generator.html>board&nbsp;generator</a></div>
-<!-- <div class="menu_item"><a href=viewer.php>games&nbsp;viewer</a></div> -->
-<div class="menu_item"><a href=demo.html?frame=inputform>games&nbsp;viewer</a></div>
+<script type="text/javascript">
+document.write('<div class="menu_item"><a href=' + pgn4web_viewer_url + '>games&nbsp;viewer</a></div>');
+</script>
 <div class="menu_item"><a href=live.html>live&nbsp;broadcast</a></div>
 <div class="menu_heading">software</div>
 <div class="menu_item"><a href=demo.html>demo</a></div>
-<div class="menu_item"><a href=http://code.google.com/p/pgn4web/>project</a></div>
-<div class="menu_item"><a href=http://code.google.com/p/pgn4web/downloads/list>download</a></div>
+<div class="menu_item"><a href=http://code.google.com/p/pgn4web/downloads/list>downloads</a></div>
 <div class="menu_item"><a href=http://code.google.com/p/pgn4web/wiki/Index?tm=6>wiki</a></div>
 <div class="menu_heading">contacts</div>
 <script type="text/javascript">
@@ -76,8 +87,8 @@ document.write('<div class="menu_item"><a href=mailto:' + pgn4web_project_email 
 </td>
 <td align="center" valign="top" width="100%">
 <iframe 
-  class='menu_heading' height='406' width='95%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
-  src='board.html?am=l&d=2000&ig=r&ss=45&ps=36&pf=r&lcs=Wtyk&dcs=OXJO&bbcs=OXJO&hm=n&hcs=ZbNv&bd=h&hd=c&md=j&tm=17&fhcs=nkYj&fhs=90p&fmcs=nkYj&fccs=nkYj&hmcs=ZbNv&fms=90p&fcs=90p&cd=h&bcs=Wtyk&fp=20&hl=t&fh=b&fw=p&pe=2017$A_e0G3vln1aYUX5ZInb9rvHKj2D4B$yeo0z_CLpvENVgZKNI$y6A0ib2t75hU1$jM1u7n$py71i9y$1nyu7P0a3jQ6$qQ1TXJvD$g3fizd$SjC7hFiz2v8TvpC7bD0W32qM0y$tQ5Yfo$1pvnB7bL2QjZfYkez5L0Sq7pQ0I$5Fi3ckEx2r$VXNcQ8x24$st9_grzk0C$8pvAjIfnr2GS75DyY14$m85w9Ft7fn4Np757qY13$Jtc$RRfwv6pEX_grBU1b$st9_grzk1c$17N6h4fyvdE5_grgN34$siUZyFgj7r$WiCV6sAfvr2EduDJhrwxv$FPQZvpIcfLL6pPQZxUcN570Su7sp9wy$sFzk4QjxDov$kpn_grgN5p$4Kjdz9wC$dPUZxU8N54$sGUN6mHuDnT1Uc1NmXX5Hh0ov7KSCLqVQvLEN1NYfdvluvfbKkk4dmheQZkD3nXD9ov3M0cfv$Ni75EN5$1pQ$kcgv45fAFc$Sx3FzM6$qGij3FzN1vdQho$Nm7r$3CF4MUs$T$RPfVgN29$58x0FzM0y$sFi3dKpvN$03o2m7bL6sByFm7cv1TXJyS7cD2JYuDsh9vS$0jM2IsVvMf$FWQZxUUN2d$hM09EnvLT6pEnyIjHfwf$kprlh_CvQxfad$x_0HxeMiz4AVvs$HL3mWOTcYpLnjUs7_mUlvhwTLEB$i3jQ1$28byu7n2t7Emt7L$pJXfbANc$5DNeryv$FnvC79$3PN5IfT0Px71p9vr$8ej2cq9vNv4MUrtmfYN25$4kazdQhU0z$VXfPsDU0B$sRx$x4fq$3Hfcij5P1UDPayNV2r$AF0FIbvMfekpo6ppvOvdE5vBDbd$cHx7VAgN39$pM6pnw0v28Hv88N370Q83dKnw2$dzo6pInw5$cbytDgD$QsVv9BDgL2E2f4k8379$WkG30kSF3d$WmtD1FBN32vekio2GMKPbj0rPx6pEDwwvsRx6pEHwx$jM2kpnwy$ckEx6hbwB$sRk2IhnwBvmjo2E2uDoL6sDlh_CvQxfaZ05pZuluRZk4dflmF0P1O$guKevSQG0wiAPyYuAp096y1Bn0bfij7$cgz2jU2$8Hv9BDL$8c3epyf0zBfYxd$5FYxdQtM0f3VKnwRGR7r0K30kSx0L6h7v9I5uDbD0FI5gKz5b0rtmfCF27$Vgz8rvO$dEHwQTF2n$3zN0zN4fqfdzc$Nu7cL$g5grfF24$Ex5JfoL4cfQlBDbd0gz28nw1v$zXf4ke37b0RFt7VXU13$tM2Fqz7n$9Fl7WkW37L0Qc33FAx3p$ij2k8F3r$VPk6jXuDfj1U7PdPMZw2vdzg4RNDfd$Vi38bwxv6pPM$QpnwwvsDxdEDwx$s7p3IfMvdP7xaFrlh_CvQxfab04ZXZ2ulH54dflmF0P1_T3mueFe9_0wiAPyYuAp05e91Bn0bfij7$cgz28rwv3Rf3Qxb$1ig1TXJyf0zN7xC7T0rtmgKj4$8mtDEmtDr0K33GK32v2kSx$FPo0A$ckDN0BIAfnL$zHfbQN27$bQF$zIfov0IXv7B7cv$iO75Ex2p$cjB75Fi35T0St7sYF24$VzfPsXgN2d$1hc$SBfnr$aq7Viz7j$zN0Fpw0v08pyFm7fv2IsVwRI5fwvdZRpdQhQ1b$sFAF0FPg1c$18F6pnw6$0ki9xVFoj79$VCGY4OOz7r0Sqz2q9w$T6h3rwStePbj0rBx6jNDnn2E1DJirwx$dQRk6J$0'  
+  class='iframe_area' height='386' width='95%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0'
+  src='board.html?am=l&d=2000&ig=r&ss=45&ps=36&pf=r&lcs=Wtyk&dcs=OXJO&bbcs=OXJO&hm=n&hcs=ZbNv&bd=h&hd=c&md=j&tm=17&fhcs=nkYj&fhs=90p&fmcs=nkYj&fccs=nkYj&hmcs=ZbNv&fms=90p&fcs=90p&cd=h&bcs=Wtyk&fp=10&hl=t&fh=b&fw=p&pe=1964$A_e0G3vkZXZ2ulH54dflmF0P1ORfoeUX5D9rJzuGXGf7MUfjO$Sx0zJfv4bfCN5$5DN$zNDL$B7SNc$hM4cgL5YfJeaD9$3g33U2vcQ8N3FzU$T1t75EN29$tM$RXfnL6IgKj5f$BD58x2b$YkezekiU0H$sRN5Ifqf0FzM2kpnvS$dKbyshnvMf6mxDJh9vOv3IfhFlDbd0QWz2jg14$m85w9Ft7fn4Np757p370rXp0IHw2$dQiU4Nqz7L0QTFazxDgD$g5fVfF3r0Q7Pm3rw0f6jZgQ7F3d$sEN6sAfvr2EdgrzU24$0kEF0FPQ22$sGijm8JfM$dWU2Ggjbn2IjxDJFzk2b$1Gi3m3rwBv0qQ2E1DoL2IdgrzU21vdQXU2GR7nT1Uc1NmXX5Hh0mWOTcYpLnjU0otD6f7otFF9rJzuGXGf7MUfjO$8x1pw$0zBfcizb$3QF$Fpy$9bwajp0K38k8xd$SlBD8k8z4$sFzN0zJfT$8ejayNV0L0IDwPyz5j$bi32k8x25$WjB7stQ0z$17N5JfovdWc6jJfq$4MUs6Jfqf6sVwQ7F2r$4i3dQSF24$1GKjmedfoL1l78ka356$Wka3sFAx39$1GixNmXX5Hh0mTczgZ9rvHKj2D4uKevSQG0wiAPyYuAp096y1Bn0bgij7$bzNcXwvcTxAsTy$0FWM$Nm7P$py7YNd$1Ex1rvD$ii7pQ2v6h7v8DF0L$zYfbQHF29$m6AMUs2S7bn$kjJfWkaz5f2GM2gRyz5n0Sp717k0H$hM$QcfqfaByfJeaDcL1lD5FPN24$YkEzsEF2d$Vzp1pvLT$RN7yFk67fD0G3sEx35$bBN$zC7fv6jzfVYx3b$VgzsFQx3n$PNcVw5v2kSF$Fpw6$dzc$kjzfvD2IlHf4mtDfT2IsVv9Fq7fd$YkczdK5wxvaBzfWkc3bb2JPfWkczbf1B7pGi3bn0FIbfVgzbL2JNDsFi3bP1Vy7s7p5r0Sp4zKUTcnz1OmOVOZSNDEN1NYfdvkZXZ2ulH54dmheQZkD3Dtb9ov3M0cfv$Q5fcizb$BN$Fpy$$zPfYFc$5ho2R7T$pGR7WkW34$iFYx6pKnwL5Xf4mt76$s7x$FPo0A$ckDNcXvMvayNV3Yfo$6hbwaz5n0QczdK4fq$$zBfbBfF2p0PwD5iU0J$17Nax4fnD4bfQN2d$EF5FPQ0wL9bvoa37j$3Cx$FETw0vdQiM6mC7fv2R7sirw2$0khM6pKnw5$dEDvAjHfyf1pvpEcfyv6lxDVCx34$Jhc2IbfwL6h7xWoj76$s8x3BfMf2IpnvpIbfLLdPg6jPfM$dzc1lDnL6p3g4Qda8uOLpM74uKevSQG0wiz4AVvs$GKCQ6AuvLENVgZKNI$y6A0ib$B78F3$5DN0zJfL1q71pM5$08DwrtmgD$No3gizr$JeaDSF1v3GKjjGKjd$Sx1kSx0L0FWM$kpbvNv5FPo$OlNDbn$hl75pU0z$5pQ$hlDbL$RZf3i35L$8Uz2jM0I$5Fi32k8x2r$WK3dZQ0xvsh7pdZ7U0C$085vqO7bd$4Izs8N39$ho$QcfvL$zIgQaz7f0RJYfWly7fL6uqc6pEpw5$dQhQ$Qp7w5v03Q2Ibfyv$FEAgskbF34$siQ4OOz7r0Sqz2q9w$T6h3rwSt7nD1Uc3dEAfLL6h4grBU23$sGHFer$0'
 >
   your web browser and/or your host do not support iframes as required to display the chessboard
 </iframe>
@@ -93,12 +104,6 @@ document.write('<div class="menu_item"><a href=mailto:' + pgn4web_project_email 
 <!-- start of hostedBy code -->
 
 <!-- end of hostedBy code -->
-
-
-<!-- start of google analytics code -->
-
-<!-- end of google analytics code -->
-
 
 </body>
 
