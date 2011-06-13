@@ -1,9 +1,0 @@
-% this is a placeholder pgn file for the live boradcast
-% it allows to announce the next broadcast on live.html
-% if the Result tag is set to "*" live.html will automatically refresh games
-
-[White "no event scheduled at this time, please check again later"]
-% [Result "*"]
-
-{[%pgn4web <a href='javascript: checkForNewLiveEvent();' onFocus='this.blur();' title='click here to check for the start of the live broadcast event' style='color: inherit;'>click here to check for the start of the live broadcast event</a>]}
-
